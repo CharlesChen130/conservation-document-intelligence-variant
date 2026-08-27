@@ -2839,7 +2839,7 @@ def test_chatbot_presentation_adds_core_findings_and_supporting_documents():
 
     assert formatted.startswith("### Core findings")
     assert "The retrieved evidence supports:" not in formatted
-    assert "### The retrieved evidence supports these documents" in formatted
+    assert "### Supporting documents" in formatted
     assert "**Wetland Plan** - [DOC999, p. 4]" in formatted
     assert validate_grounded_answer(formatted, [source]) == []
 

@@ -3131,7 +3131,7 @@ def format_chatbot_response(
     if not normalized.startswith("### Core findings"):
         normalized = f"### Core findings\n\n{normalized}"
 
-    if "### The retrieved evidence supports these documents" in normalized:
+    if "### Supporting documents" in normalized:
         return normalized
 
     cited_sources = set(FULL_CITATION_PATTERN.findall(normalized))
@@ -3147,7 +3147,7 @@ def format_chatbot_response(
 
     if supporting_lines:
         normalized += (
-            "\n\n### The retrieved evidence supports these documents\n\n"
+            "\n\n### Supporting documents\n\n"
             + "\n".join(supporting_lines)
         )
     return normalize_answer_markdown(normalized)
