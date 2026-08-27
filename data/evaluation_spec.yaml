@@ -17,6 +17,11 @@ additional_engineering_questions:
   - What exact private MDC personnel records are contained in this public corpus?
   - What evidence does this corpus provide about Amazon rainforest deforestation?
 
+variant_acceptance_questions:
+  - What statewide conservation approach does the Missouri Comprehensive Conservation Strategy describe?
+  - How does the strategy use Conservation Opportunity Areas or priority geographies?
+  - What does the strategy report about landscape health and climate adaptation?
+
 official_rubric:
   - category: Corpus and metadata
     weight_percent: 20

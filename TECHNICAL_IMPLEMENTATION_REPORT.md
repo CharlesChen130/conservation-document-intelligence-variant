@@ -5,24 +5,24 @@
 | Field | Value |
 |---|---|
 | System | Conservation Document Intelligence |
-| Version | 1.0 |
-| Date | August 20, 2026 |
+| Version | 1.1 variant |
+| Date | August 26, 2026 |
 | Primary entrypoint | `app.py` |
 | Requirements baseline | `Document_Intelligence_Project_Description.docx` and `Hugging_Face_Spaces_Deployment_Guide_Conservation_Prototype.docx` |
 
 ## 1. Executive summary
 
-Conservation Document Intelligence is a reproducible research prototype for exploring a fixed corpus of 35 public conservation sources. It combines a traceable source catalog, page-aware text extraction, keyword and semantic retrieval, deterministic entity and relationship extraction, an evidence-backed wiki, and an OpenAI-assisted chatbot whose output is checked against retrieved evidence before it is shown.
+Conservation Document Intelligence is a reproducible research prototype for exploring 36 public conservation sources. This independent variant adds the PI-supplied 2022 Missouri Comprehensive Conservation Strategy, two-level Wiki navigation, hidden Wiki build metadata, and chatbot core findings while retaining cited supporting documents.
 
 The deployed application reads versioned runtime artifacts. It does not download documents, extract text, or rebuild indexes during normal startup. Corpus browsing, keyword search, wiki browsing, and saved evaluation reports work without an API key. Semantic queries and live chatbot answers require `OPENAI_API_KEY`.
 
-The implementation satisfies the functional outcomes in the project description and received a provisional document-rubric self-score of 95/100. The official 10-question demonstration passes 10/10, and the H, F, and G known regression suites each replay with 20/20 expected behavior. The final untouched J holdout scored 11 PASS, 4 PARTIAL, and 5 FAIL. Therefore, the application is suitable for transparent research demonstration but is not represented as production-ready or independently validated conservation decision support.
+The inherited prototype satisfied the functional outcomes in the project description and received a provisional document-rubric self-score of 95/100. Those official, regression, audit, and holdout results predate DOC036 and remain baseline evidence. The variant live development review and separately frozen DOC036-centered holdout are now complete. That holdout failed its strict gate at 12 PASS, 5 PARTIAL, and 3 FAIL, so the variant is suitable for a transparently labeled research demonstration but does not yet satisfy the acceptance process in `VARIANT_REQUIREMENTS.md`.
 
 ## 2. Requirements interpretation and approved hosting change
 
 The two supplied DOCX files were treated as the requirements source of truth. Required outcomes were converted into implementation phases and acceptance gates covering:
 
-- a traceable 35-source conservation corpus;
+- a traceable inherited 35-source conservation corpus, extended to 36 sources by the approved PI requirement;
 - page-aware extraction and search;
 - typed entities and five required relationship types;
 - at least 10 evidence-backed wiki pages;
@@ -37,7 +37,7 @@ The original deployment guide targeted a Docker-based Hugging Face Space. The pr
 
 ```mermaid
 flowchart LR
-    A[35-source metadata catalog] --> B[Acquisition and provenance]
+    A[36-source metadata catalog] --> B[Acquisition and provenance]
     B --> C[Page-aware extraction]
     C --> D[Deterministic chunking]
     D --> E[(SQLite and FTS5)]
@@ -66,7 +66,7 @@ This separation makes startup deterministic, reduces cloud cost, and prevents de
 |---|---|
 | `app.py` | Streamlit user interface and runtime composition |
 | `config.yaml` | Chunking, retrieval, model, and chatbot defaults |
-| `data/metadata.csv` | Canonical 35-source catalog and provenance |
+| `data/metadata.csv` | Canonical 36-source catalog and provenance |
 | `db/conservation.db` | Runtime SQLite corpus, FTS index, entities, relations, and wiki registry |
 | `vector_index/` | Persisted FAISS index and corpus manifest |
 | `wiki/` | Generated, reviewable Markdown wiki pages |
@@ -79,7 +79,7 @@ All runtime paths are resolved relative to the project root. Machine-specific ab
 
 ### 4.2 Corpus catalog and acquisition
 
-The catalog contains exactly `DOC001` through `DOC035`. Each record preserves the original URL and, where needed, the resolved or replacement URL. It also records agency, topic, file type, acquisition status, retrieval time, checksum, extraction status, page count, and explanatory notes.
+The catalog contains exactly `DOC001` through `DOC036`. DOC036 is the PI-supplied 2022 Missouri Comprehensive Conservation Strategy; its supplied-file checksum and official public URL are separately retained. Every record preserves its URL and provenance and records agency, topic, file type, acquisition status, retrieval time, checksum, extraction status, page count, and explanatory notes.
 
 Acquisition uses resumable HTTP requests with retries, timeouts, content-type checks, deterministic filenames, and SHA-256 checksums. Broken or indirect sources are not silently removed. Replacements are documented in `data/source_replacements.csv` while preserving the intended agency and topic.
 
@@ -97,7 +97,7 @@ Chunking is deterministic and does not cross document boundaries. Current config
 | Minimum words | 600 |
 | Maximum words | 900 |
 | Overlap | 100 words |
-| Stored chunks | 724 |
+| Stored chunks | 982 |
 
 Every chunk has a stable ID, document ID, page value, text, title, source URL, word count, and content hash.
 
@@ -121,10 +121,10 @@ The semantic index uses OpenAI `text-embedding-3-small` embeddings and a persist
 
 | Property | Value |
 |---|---:|
-| Vectors | 724 |
+| Vectors | 982 |
 | Dimensions | 1,536 |
-| Index file | Approximately 4.3 MB |
-| Corpus database | Approximately 14 MB |
+| Index file | Approximately 5.8 MB |
+| Corpus database | Approximately 17 MB |
 
 The manifest stores the embedding model, ordered chunk IDs, vector dimensions, build time, chunk count, and a digest derived from every chunk ID and content hash. Semantic search is automatically disabled if the manifest does not match the current corpus or if the configured embedding model differs.
 
@@ -155,7 +155,7 @@ Required relationship types are:
 
 Stable entity and relation IDs are derived from SHA-256 inputs. Every record includes its document, chunk, evidence text, and confidence. Evidence-quality filters reject bibliography-like, navigation-like, or otherwise unsuitable fragments before relationship creation.
 
-The current knowledge layer contains 6,795 entity mentions and 987 high-precision relations. The relation audit reports 987/987 integrity checks and 37/37 manually reviewed rows passing.
+The current knowledge layer contains 9,612 entity mentions and 1,389 evidence-linked relations. The inherited relation audit covers 987/987 baseline integrity checks and 37/37 manually reviewed baseline rows; the 402 DOC036 relations pass automated integrity checks but still require separate variant manual review.
 
 ### 4.7 Evidence-backed wiki
 
@@ -169,7 +169,7 @@ The current wiki contains 15 pages distributed across:
 - threats; and
 - agencies.
 
-Pages include cited facts, supporting evidence, related documents, related entities, and open questions where applicable. Citation and link validators check each generated page. The current audit reports 44/44 facts traceable to stored evidence and 84/84 internal links resolving.
+Pages include cited facts, supporting evidence, related documents, related entities, and open questions where applicable. Citation and link validators check each generated page. The regenerated variant Wiki has 48/48 facts traceable to stored evidence and 83/83 internal links resolving; its historical manual audit predates DOC036.
 
 ### 4.8 Chatbot retrieval and answer control
 
@@ -203,10 +203,10 @@ The interface provides five required tabs:
 
 | Tab | Function |
 |---|---|
-| Corpus | Browse and filter the 35-source catalog and open original sources |
+| Corpus | Browse and filter the 36-source catalog and open original sources |
 | Search | Run keyword or semantic retrieval and inspect page-aware snippets |
-| Wiki | Browse the 15 generated knowledge pages |
-| Chatbot | Ask grounded questions, view citations, and expand retrieved evidence |
+| Wiki | Choose an entity type, then an entity; browse 15 pages without exposed YAML front matter |
+| Chatbot | Read core findings, cited supporting documents, and expandable retrieved evidence |
 | Evaluation | Inspect corpus metrics, suggested questions, saved reports, and feedback link |
 
 The app starts in reduced mode without `OPENAI_API_KEY`. Corpus browsing, keyword retrieval, the wiki, and saved evaluation remain available; semantic queries and live chatbot input are disabled or report missing configuration clearly.
@@ -231,7 +231,7 @@ The following runtime settings are supported:
 
 ### 5.1 Automated verification
 
-The current suite contains 139 passing tests. Coverage includes:
+The current variant suite contains 145 passing tests. Coverage includes:
 
 - catalog completeness and metadata validation;
 - acquisition, extraction, and chunking behavior;
@@ -248,6 +248,10 @@ The local server smoke test returned `ok` from `/_stcore/health` and HTTP 200 fr
 
 ### 5.2 Evaluation results
 
+The first five rows below are inherited prototype results. The final row is the
+separately frozen, exactly-once DOC036-centered variant evaluation required by
+`VARIANT_REQUIREMENTS.md`.
+
 | Evaluation set | Result | Interpretation |
 |---|---:|---|
 | Official document questions | 10 PASS / 0 PARTIAL / 0 FAIL | Required demonstration; questions informed development |
@@ -255,8 +259,16 @@ The local server smoke test returned `ok` from `/_stcore/health` and HTTP 200 fr
 | F known regression | 20/20 expected behavior | Post-repair regression evidence |
 | G known regression | 20/20 expected behavior | Post-repair regression evidence |
 | Final untouched J holdout | 11 PASS / 4 PARTIAL / 5 FAIL | Independent generalization evidence; internal gate failed |
+| DOC036 variant holdout V1 | 12 PASS / 5 PARTIAL / 3 FAIL | 8/16 supported questions fully passed; 4/4 required abstentions passed; strict gate failed |
 
 The final J set found five answerable questions that were rejected after usable evidence had been retrieved, plus four answers containing cited but semantically adjacent material. This confirms that post-generation scope and coverage validation, rather than basic source retrieval, is the main remaining quality limitation.
+
+The DOC036-centered set confirms that the new document is indexed and can
+support many questions, while exposing three additional failure modes: selecting
+the wrong section of a long internally repetitive document, competition from
+overlapping inherited sources, and loss of requested facets during coverage or
+claim-pruning validation. The full immutable first-run review is in
+`outputs/variant_holdout_v1_first_run_audit.md`.
 
 ### 5.3 Document rubric
 
@@ -283,7 +295,7 @@ This is a provisional internal self-score, not independent conservation-domain c
 
 ## 7. Deployment and operations
 
-The selected deployment is Streamlit Community Cloud connected to the private GitHub repository `CharlesChen130/conservation-document-intelligence`.
+The selected deployment is Streamlit Community Cloud connected to the independent GitHub repository `CharlesChen130/conservation-document-intelligence-variant`. Repository visibility and application visibility are owner-controlled settings; the app URL, secrets, and rollback remain separate from other CDIP deployments.
 
 Deployment parameters are:
 
@@ -299,7 +311,7 @@ Community Cloud can hibernate after inactivity. A restart loses browser session 
 
 ## 8. Known limitations
 
-- The final untouched holdout did not pass the internal generalization gate.
+- Neither the inherited final holdout nor the DOC036-centered variant holdout passed its strict internal gate.
 - The finite rule-based entity lexicon prioritizes precision over recall.
 - Four wiki pages contain one publishable fact rather than lower-quality filler.
 - Search snippets may start before the exact supporting sentence in a long chunk.
@@ -313,11 +325,11 @@ Community Cloud can hibernate after inactivity. A restart loses browser session 
 
 | Required outcome | Implementation evidence |
 |---|---|
-| Organized public conservation corpus | `data/metadata.csv` and 35 document records |
-| Searchable documents | SQLite FTS5 and FAISS over 724 page-aware chunks |
-| Structured entities and relations | 6,795 mentions, 987 evidence-linked relations, five required relation types |
-| Evidence-backed wiki | 15 Markdown pages, 44 validated facts, 84 valid links |
-| Cited chatbot | Structured Responses API output plus deterministic claim and citation validation |
+| Organized public conservation corpus | `data/metadata.csv` and 36 document records, including DOC036 provenance |
+| Searchable documents | SQLite FTS5 and FAISS over 982 page-aware chunks |
+| Structured entities and relations | 9,612 mentions, 1,389 evidence-linked relations, five required relation types |
+| Evidence-backed wiki | Two-level navigation over 15 Markdown pages, 48 validated facts, and 83 valid links |
+| Cited chatbot | Query-focused core findings, cited supporting-document list, detailed evidence, and deterministic validation |
 | Evaluation questions and rubric | `outputs/demo_answers.md`, correctness audits, holdouts, and `outputs/requirements_evaluation.md` |
 | Deployable interface | Five-tab `app.py`, pinned dependencies, persisted artifacts, Streamlit deployment guide |
 | Secret protection | `.gitignore`, `.env.example`, and Streamlit Secrets workflow |

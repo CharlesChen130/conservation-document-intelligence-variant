@@ -8,7 +8,12 @@ from src.conservation_intelligence.entity_extraction import (
     replace_extractions,
 )
 from src.conservation_intelligence.repository import replace_document_chunks, sync_documents
-from src.conservation_intelligence.wiki import generate_wiki, slugify, validate_wiki_page
+from src.conservation_intelligence.wiki import (
+    generate_wiki,
+    parse_wiki_document,
+    slugify,
+    validate_wiki_page,
+)
 
 
 def test_slug_and_page_validation():
@@ -185,3 +190,33 @@ Wetland summary without evidence.
     assert "page presents chunk co-occurrence as a relationship" in errors
     assert any(error.startswith("unattributed evidence snippet:") for error in errors)
     assert any(error.startswith("open question is not a question:") for error in errors)
+
+
+def test_parse_wiki_document_hides_front_matter_and_retains_navigation_metadata(
+    tmp_path,
+):
+    wiki_dir = tmp_path / "wiki"
+    page_path = wiki_dir / "agencies" / "test-agency.md"
+    page_path.parent.mkdir(parents=True)
+    page_path.write_text(
+        "---\n"
+        'title: "Test Agency"\n'
+        "entity_type: agency\n"
+        "mentions: 12\n"
+        "documents: 3\n"
+        "generated_at: 2026-08-26T00:00:00+00:00\n"
+        "---\n\n"
+        "# Test Agency\n\nEvidence-backed body.\n",
+        encoding="utf-8",
+    )
+
+    page = parse_wiki_document(page_path, wiki_dir=wiki_dir)
+
+    assert page.category == "agencies"
+    assert page.title == "Test Agency"
+    assert page.entity_type == "agency"
+    assert page.mentions == 12
+    assert page.documents == 3
+    assert page.body.startswith("# Test Agency")
+    assert "generated_at:" not in page.body
+    assert "entity_type:" not in page.body

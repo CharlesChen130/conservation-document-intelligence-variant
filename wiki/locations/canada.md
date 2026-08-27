@@ -1,9 +1,9 @@
 ---
 title: "Canada"
 entity_type: location
-mentions: 170
-documents: 16
-generated_at: 2026-08-20T06:16:00.125855+00:00
+mentions: 176
+documents: 17
+generated_at: 2026-08-26T23:16:02.593273+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,7 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 170 extracted mentions of **Canada** across 16 public documents. [DOC034, pp. 54-57] [DOC014, pp. 7-8] [DOC003, pp. 12-14]
+The corpus contains 176 extracted mentions of **Canada** across 17 public documents. [DOC034, pp. 54-57] [DOC014, pp. 7-8] [DOC003, pp. 12-14]
 
 ## Key facts
 
@@ -29,14 +29,14 @@ The corpus contains 170 extracted mentions of **Canada** across 16 public docume
 
 ## Related entities
 
-- **[United States](united-states.md)** (location) — co-mentioned with this entity in 16 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC009]
-- **[Wetland](../habitats/wetland.md)** (habitat) — co-mentioned with this entity in 11 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC013]
-- **[North America](north-america.md)** (location) — co-mentioned with this entity in 10 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC011]
-- **[Forest](../habitats/forest.md)** (habitat) — co-mentioned with this entity in 9 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC013]
-- **[U.S. Fish and Wildlife Service](../agencies/u-s-fish-and-wildlife-service.md)** (agency) — co-mentioned with this entity in 8 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC009]
+- **[United States](united-states.md)** (location) — co-mentioned with this entity in 17 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC009]
+- **[Wetland](../habitats/wetland.md)** (habitat) — co-mentioned with this entity in 12 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC013]
+- **[North America](north-america.md)** (location) — co-mentioned with this entity in 11 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC011]
+- **[Forest](../habitats/forest.md)** (habitat) — co-mentioned with this entity in 10 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC013]
+- **[U.S. Fish and Wildlife Service](../agencies/u-s-fish-and-wildlife-service.md)** (agency) — co-mentioned with this entity in 9 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC009]
+- **Great Lakes** (location) — co-mentioned with this entity in 7 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC009] [DOC011]
 - **[Marsh](../habitats/marsh.md)** (habitat) — co-mentioned with this entity in 7 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC013]
-- **Great Lakes** (location) — co-mentioned with this entity in 6 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC009] [DOC011]
-- **Estuary** (habitat) — co-mentioned with this entity in 6 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC011] [DOC014]
+- **North American Waterfowl Management Plan** (program) — co-mentioned with this entity in 6 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC014]
 
 ## Evidence snippets
 
@@ -58,5 +58,5 @@ The corpus contains 170 extracted mentions of **Canada** across 16 public docume
 ## Open questions
 
 - Which sources provide the strongest direct evidence about Canada?
-- What important aspects of Canada are absent from this 35-source corpus?
+- What important aspects of Canada are absent from this 36-source corpus?
 - Do newer documents confirm, qualify, or contradict the extracted evidence?

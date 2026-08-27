@@ -1,9 +1,9 @@
 ---
 title: "Hydrilla"
 entity_type: species
-mentions: 21
-documents: 4
-generated_at: 2026-08-20T06:16:00.125855+00:00
+mentions: 23
+documents: 5
+generated_at: 2026-08-26T23:16:02.593273+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,7 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 21 extracted mentions of **Hydrilla** across 4 public documents. [DOC005, pp. 13-14]
+The corpus contains 23 extracted mentions of **Hydrilla** across 5 public documents. [DOC005, pp. 13-14]
 
 ## Key facts
 
@@ -24,14 +24,14 @@ The corpus contains 21 extracted mentions of **Hydrilla** across 4 public docume
 
 ## Related entities
 
-- **[Invasive species](../threats/invasive-species.md)** (threat) — co-mentioned with this entity in 4 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
-- **[United States](../locations/united-states.md)** (location) — co-mentioned with this entity in 4 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
-- **Zebra mussel** (species) — co-mentioned with this entity in 4 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
-- **Quagga mussel** (species) — co-mentioned with this entity in 4 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
+- **[Invasive species](../threats/invasive-species.md)** (threat) — co-mentioned with this entity in 5 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
+- **[United States](../locations/united-states.md)** (location) — co-mentioned with this entity in 5 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
+- **Zebra mussel** (species) — co-mentioned with this entity in 5 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
+- **Quagga mussel** (species) — co-mentioned with this entity in 5 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
+- **[Invasive carp](invasive-carp.md)** (species) — co-mentioned with this entity in 4 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
+- **[Disease](../threats/disease.md)** (threat) — co-mentioned with this entity in 3 documents; this is a corpus association only, not an inferred semantic relationship. [DOC005] [DOC006] [DOC036]
 - **Great Lakes** (location) — co-mentioned with this entity in 3 documents; this is a corpus association only, not an inferred semantic relationship. [DOC005] [DOC006] [DOC009]
-- **[Invasive carp](invasive-carp.md)** (species) — co-mentioned with this entity in 3 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC006]
 - **Silver carp** (species) — co-mentioned with this entity in 3 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC005] [DOC009]
-- **[U.S. Geological Survey](../agencies/u-s-geological-survey.md)** (agency) — co-mentioned with this entity in 2 documents; this is a corpus association only, not an inferred semantic relationship. [DOC005] [DOC006]
 
 ## Evidence snippets
 
@@ -41,5 +41,5 @@ The corpus contains 21 extracted mentions of **Hydrilla** across 4 public docume
 ## Open questions
 
 - Which sources provide the strongest direct evidence about Hydrilla?
-- What important aspects of Hydrilla are absent from this 35-source corpus?
+- What important aspects of Hydrilla are absent from this 36-source corpus?
 - Do newer documents confirm, qualify, or contradict the extracted evidence?

@@ -1,14 +1,17 @@
 from __future__ import annotations
 
 import os
-from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 
-from src.conservation_intelligence.chatbot import OpenAIAnswerProvider, answer_question
+from src.conservation_intelligence.chatbot import (
+    OpenAIAnswerProvider,
+    answer_question,
+    format_chatbot_response,
+)
 from src.conservation_intelligence.database import connect_database, initialize_database
-from src.conservation_intelligence.paths import METADATA_PATH, OUTPUTS_DIR, WIKI_DIR, ensure_directories
+from src.conservation_intelligence.paths import METADATA_PATH, OUTPUTS_DIR, ensure_directories
 from src.conservation_intelligence.evaluation import load_evaluation_spec
 from src.conservation_intelligence.repository import keyword_search
 from src.conservation_intelligence.semantic import (
@@ -17,6 +20,10 @@ from src.conservation_intelligence.semantic import (
     semantic_search,
 )
 from src.conservation_intelligence.settings import load_environment, load_settings
+from src.conservation_intelligence.wiki import (
+    WIKI_CATEGORY_LABELS,
+    load_wiki_documents,
+)
 
 
 load_environment()
@@ -142,16 +149,40 @@ with search_tab:
 
 with wiki_tab:
     st.header("LLM Wiki")
-    wiki_pages = sorted(WIKI_DIR.rglob("*.md")) if WIKI_DIR.exists() else []
-    if not wiki_pages:
+    wiki_documents = load_wiki_documents()
+    if not wiki_documents:
         st.info("Evidence-backed wiki pages will appear here after extraction.")
     else:
-        selected_page = st.selectbox(
-            "Page",
-            wiki_pages,
-            format_func=lambda path: path.relative_to(WIKI_DIR).as_posix(),
+        available_categories = [
+            category
+            for category in WIKI_CATEGORY_LABELS
+            if any(page.category == category for page in wiki_documents)
+        ]
+        selector_columns = st.columns([1, 2])
+        selected_category = selector_columns[0].selectbox(
+            "Entity type",
+            available_categories,
+            format_func=lambda category: WIKI_CATEGORY_LABELS.get(
+                category, category.replace("-", " ").title()
+            ),
         )
-        st.markdown(Path(selected_page).read_text(encoding="utf-8"))
+        category_documents = [
+            page for page in wiki_documents if page.category == selected_category
+        ]
+        selected_title = selector_columns[1].selectbox(
+            "Entity",
+            [page.title for page in category_documents],
+        )
+        selected_document = next(
+            page for page in category_documents if page.title == selected_title
+        )
+        if selected_document.mentions or selected_document.documents:
+            st.caption(
+                f"{selected_document.entity_type.replace('_', ' ').title()} | "
+                f"{selected_document.mentions:,} mentions across "
+                f"{selected_document.documents:,} public documents"
+            )
+        st.markdown(selected_document.body)
 
 with chatbot_tab:
     st.header("Citation-based chatbot")
@@ -214,7 +245,8 @@ with chatbot_tab:
                             candidate_k=settings.retrieval.candidate_k,
                             max_question_characters=settings.chatbot.max_question_characters,
                         )
-                        st.markdown(result.answer)
+                        display_answer = format_chatbot_response(result.answer, result.evidence)
+                        st.markdown(display_answer)
                         sources = []
                         if result.evidence:
                             with st.expander("Retrieved evidence"):
@@ -246,7 +278,7 @@ with chatbot_tab:
                                         }
                                     )
                         st.session_state.chat_messages.append(
-                            {"role": "assistant", "content": result.answer, "sources": sources}
+                            {"role": "assistant", "content": display_answer, "sources": sources}
                         )
                     except Exception as error:
                         st.error(f"The grounded answer could not be produced: {error}")

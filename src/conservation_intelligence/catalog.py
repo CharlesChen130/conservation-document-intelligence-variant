@@ -30,7 +30,7 @@ REQUIRED_COLUMNS = (
     "extracted_characters",
     "extraction_notes",
 )
-REQUIRED_DOC_IDS = tuple(f"DOC{number:03d}" for number in range(1, 36))
+REQUIRED_DOC_IDS = tuple(f"DOC{number:03d}" for number in range(1, 37))
 
 
 class CatalogError(ValueError):
@@ -55,7 +55,9 @@ def validate_catalog(rows: Iterable[dict[str, str]]) -> list[str]:
     doc_ids = [row.get("doc_id", "") for row in row_list]
 
     if len(row_list) != len(REQUIRED_DOC_IDS):
-        errors.append(f"expected 35 rows, found {len(row_list)}")
+        errors.append(
+            f"expected {len(REQUIRED_DOC_IDS)} rows, found {len(row_list)}"
+        )
     if len(set(doc_ids)) != len(doc_ids):
         errors.append("doc_id values must be unique")
 

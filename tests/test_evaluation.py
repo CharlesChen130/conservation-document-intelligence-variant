@@ -15,6 +15,11 @@ def test_demo_question_set_has_required_and_edge_questions():
 
     assert len(spec["official_questions"]) == 10
     assert len(questions) == 15
+    assert len(spec["variant_acceptance_questions"]) == 3
+    assert set(spec["variant_acceptance_questions"]).isdisjoint(
+        spec["official_questions"] + spec["additional_engineering_questions"]
+    )
+
     assert questions[0] == "What documents discuss aquatic invasive species?"
     assert sum(item["weight_percent"] for item in spec["official_rubric"]) == 100
 

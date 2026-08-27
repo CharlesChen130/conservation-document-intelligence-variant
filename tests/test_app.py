@@ -19,3 +19,10 @@ def test_streamlit_shell_renders_required_tabs():
         "Evaluation",
     ]
 
+
+    selectbox_labels = [selectbox.label for selectbox in app.selectbox]
+    assert "Entity type" in selectbox_labels
+    assert "Entity" in selectbox_labels
+    rendered_markdown = "\n".join(element.value for element in app.markdown)
+    assert "generated_at:" not in rendered_markdown
+    assert "generation_method:" not in rendered_markdown

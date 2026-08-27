@@ -8,6 +8,8 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
 
+import yaml
+
 from .database import connect_database
 from .paths import DATABASE_PATH, PROJECT_ROOT, WIKI_DIR
 from .repository import evidence_quality_issues
@@ -20,6 +22,18 @@ CATEGORY_TYPES = {
     "threats": ("threat",),
     "agencies": ("agency",),
 }
+
+WIKI_CATEGORY_LABELS = {
+    "species": "Species",
+    "habitats": "Habitats",
+    "locations": "Locations",
+    "threats": "Threats",
+    "agencies": "Agencies",
+}
+FRONT_MATTER_PATTERN = re.compile(
+    r"\A---[ \t]*\r?\n(?P<metadata>.*?)\r?\n---[ \t]*(?:\r?\n|\Z)",
+    flags=re.DOTALL,
+)
 CITATION_PATTERN = re.compile(r"\[DOC\d{3}(?:, p{1,2}\. \d+(?:-\d+)?)?\]")
 WIKI_NOISE_PATTERN = re.compile(
     r"\b(?:table of contents|literature cited|cited references|bibliography|"
@@ -64,6 +78,70 @@ class WikiPage:
     entity_type: str
     file_path: str
     content: str
+
+
+@dataclass(frozen=True)
+class WikiDocument:
+    path: Path
+    category: str
+    title: str
+    entity_type: str
+    body: str
+    mentions: int = 0
+    documents: int = 0
+
+
+def _metadata_integer(metadata: dict[str, object], key: str) -> int:
+    try:
+        return int(metadata.get(key, 0) or 0)
+    except (TypeError, ValueError):
+        return 0
+
+
+def parse_wiki_document(path: Path, *, wiki_dir: Path = WIKI_DIR) -> WikiDocument:
+    """Load a generated Wiki page without exposing its YAML front matter."""
+    content = path.read_text(encoding="utf-8")
+    match = FRONT_MATTER_PATTERN.match(content)
+    metadata: dict[str, object] = {}
+    body = content
+    if match:
+        loaded = yaml.safe_load(match.group("metadata")) or {}
+        if isinstance(loaded, dict):
+            metadata = {str(key): value for key, value in loaded.items()}
+        body = content[match.end() :].lstrip()
+
+    relative_path = path.resolve().relative_to(wiki_dir.resolve())
+    category = relative_path.parts[0] if len(relative_path.parts) > 1 else ""
+    title = str(metadata.get("title") or path.stem.replace("-", " ").title())
+    fallback_types = CATEGORY_TYPES.get(category, (category.rstrip("s"),))
+    entity_type = str(metadata.get("entity_type") or fallback_types[0])
+    return WikiDocument(
+        path=path,
+        category=category,
+        title=title,
+        entity_type=entity_type,
+        body=body,
+        mentions=_metadata_integer(metadata, "mentions"),
+        documents=_metadata_integer(metadata, "documents"),
+    )
+
+
+def load_wiki_documents(*, wiki_dir: Path = WIKI_DIR) -> list[WikiDocument]:
+    if not wiki_dir.exists():
+        return []
+    documents = [
+        parse_wiki_document(path, wiki_dir=wiki_dir)
+        for path in wiki_dir.glob("*/*.md")
+    ]
+    return sorted(
+        documents,
+        key=lambda item: (
+            tuple(CATEGORY_TYPES).index(item.category)
+            if item.category in CATEGORY_TYPES
+            else len(CATEGORY_TYPES),
+            item.title.casefold(),
+        ),
+    )
 
 
 def slugify(value: str) -> str:
@@ -363,8 +441,9 @@ def _entity_evidence(
     per_document: dict[str, int] = {}
     for max_per_document in (1, 2):
         for _, row in scored:
+            cleaned_evidence = clean_wiki_evidence(row["evidence"], name)
             normalized_evidence = re.sub(
-                r"\W+", " ", row["evidence"].casefold()
+                r"\W+", " ", cleaned_evidence.casefold()
             ).strip()
             if (
                 row["chunk_id"] in selected_chunks
@@ -490,6 +569,9 @@ def render_page(
     page_index: dict[tuple[str, str], str],
 ) -> WikiPage:
     evidence_rows = _entity_evidence(connection, name, entity_type)
+    corpus_count = connection.execute(
+        "SELECT COUNT(*) FROM documents"
+    ).fetchone()[0]
     semantic_related_rows = _semantic_related_entities(connection, name)
     co_mentioned_rows = _co_mentioned_entities(connection, name, entity_type)
     citations = " ".join(
@@ -599,7 +681,7 @@ def render_page(
             "## Open questions",
             "",
             f"- Which sources provide the strongest direct evidence about {name}?",
-            f"- What important aspects of {name} are absent from this 35-source corpus?",
+            f"- What important aspects of {name} are absent from this {corpus_count}-source corpus?",
             "- Do newer documents confirm, qualify, or contradict the extracted evidence?",
             "",
         ]

@@ -30,10 +30,10 @@ class NeverCalledProvider:
 
 def test_precomputed_corpus_is_complete_and_referentially_sound() -> None:
     connection = sqlite3.connect(DATABASE_PATH)
-    assert connection.execute("SELECT COUNT(*) FROM documents").fetchone()[0] == 35
-    assert connection.execute("SELECT COUNT(*) FROM chunks").fetchone()[0] == 724
-    assert connection.execute("SELECT COUNT(*) FROM entities").fetchone()[0] == 6795
-    assert connection.execute("SELECT COUNT(*) FROM relations").fetchone()[0] == 987
+    assert connection.execute("SELECT COUNT(*) FROM documents").fetchone()[0] == 36
+    assert connection.execute("SELECT COUNT(*) FROM chunks").fetchone()[0] == 982
+    assert connection.execute("SELECT COUNT(*) FROM entities").fetchone()[0] == 9612
+    assert connection.execute("SELECT COUNT(*) FROM relations").fetchone()[0] == 1389
     assert connection.execute("SELECT COUNT(*) FROM wiki_pages").fetchone()[0] == 15
 
     orphan_chunks = connection.execute(
@@ -167,7 +167,7 @@ def test_streamlit_cloud_deployment_contract() -> None:
     assert "Streamlit Community Cloud" in readme
     assert "Main file path: `app.py`" in deployment
     assert "Python version: `3.12`" in deployment
-    assert "CharlesChen130/conservation-document-intelligence" in deployment
+    assert "CharlesChen130/conservation-document-intelligence-variant" in deployment
     assert "streamlit==" in requirements
     assert ".env" in gitignore
     assert ".streamlit/secrets.toml" in gitignore

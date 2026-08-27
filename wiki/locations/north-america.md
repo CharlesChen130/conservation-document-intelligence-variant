@@ -1,9 +1,9 @@
 ---
 title: "North America"
 entity_type: location
-mentions: 72
-documents: 16
-generated_at: 2026-08-20T06:16:00.125855+00:00
+mentions: 85
+documents: 17
+generated_at: 2026-08-26T23:16:02.593273+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,7 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 72 extracted mentions of **North America** across 16 public documents. [DOC021] [DOC003, pp. 23-26] [DOC034, pp. 111-113]
+The corpus contains 85 extracted mentions of **North America** across 17 public documents. [DOC021] [DOC003, pp. 23-26] [DOC034, pp. 111-113]
 
 ## Key facts
 
@@ -32,14 +32,14 @@ The corpus contains 72 extracted mentions of **North America** across 16 public 
 
 ## Related entities
 
-- **[United States](united-states.md)** (location) — co-mentioned with this entity in 13 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC006]
-- **[Canada](canada.md)** (location) — co-mentioned with this entity in 10 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC011]
-- **[Wetland](../habitats/wetland.md)** (habitat) — co-mentioned with this entity in 8 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC004]
+- **[United States](united-states.md)** (location) — co-mentioned with this entity in 14 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC006]
+- **[Canada](canada.md)** (location) — co-mentioned with this entity in 11 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC011]
+- **[Wetland](../habitats/wetland.md)** (habitat) — co-mentioned with this entity in 9 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC004]
+- **[Forest](../habitats/forest.md)** (habitat) — co-mentioned with this entity in 8 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC004]
+- **[U.S. Fish and Wildlife Service](../agencies/u-s-fish-and-wildlife-service.md)** (agency) — co-mentioned with this entity in 8 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC004]
+- **[Climate change](../threats/climate-change.md)** (threat) — co-mentioned with this entity in 8 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC012]
+- **Prairie** (habitat) — co-mentioned with this entity in 7 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC013]
 - **Great Lakes** (location) — co-mentioned with this entity in 7 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC006] [DOC009]
-- **[Forest](../habitats/forest.md)** (habitat) — co-mentioned with this entity in 7 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC004]
-- **[U.S. Fish and Wildlife Service](../agencies/u-s-fish-and-wildlife-service.md)** (agency) — co-mentioned with this entity in 7 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC004]
-- **[Climate change](../threats/climate-change.md)** (threat) — co-mentioned with this entity in 7 documents; this is a corpus association only, not an inferred semantic relationship. [DOC003] [DOC004] [DOC012]
-- **Prairie** (habitat) — co-mentioned with this entity in 6 documents; this is a corpus association only, not an inferred semantic relationship. [DOC001] [DOC003] [DOC013]
 
 ## Evidence snippets
 
@@ -64,5 +64,5 @@ The corpus contains 72 extracted mentions of **North America** across 16 public 
 ## Open questions
 
 - Which sources provide the strongest direct evidence about North America?
-- What important aspects of North America are absent from this 35-source corpus?
+- What important aspects of North America are absent from this 36-source corpus?
 - Do newer documents confirm, qualify, or contradict the extracted evidence?

@@ -3,7 +3,7 @@ title: "Bighead carp"
 entity_type: species
 mentions: 23
 documents: 6
-generated_at: 2026-08-20T06:16:00.125855+00:00
+generated_at: 2026-08-26T23:16:02.593273+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -41,5 +41,5 @@ The corpus contains 23 extracted mentions of **Bighead carp** across 6 public do
 ## Open questions
 
 - Which sources provide the strongest direct evidence about Bighead carp?
-- What important aspects of Bighead carp are absent from this 35-source corpus?
+- What important aspects of Bighead carp are absent from this 36-source corpus?
 - Do newer documents confirm, qualify, or contradict the extracted evidence?

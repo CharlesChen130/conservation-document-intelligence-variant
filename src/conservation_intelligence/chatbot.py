@@ -2109,7 +2109,7 @@ def _render_structured_claims(
     subject_terms = _subject_terms(question)
     requested_facets = _requested_action_facets(subject_terms)
     entity_terms = subject_terms - ALL_ACTION_FACET_TERMS
-    lines = ["The retrieved evidence supports:", ""]
+    lines = ["### Core findings", ""]
     for item in decision.claims:
         labels: list[str] = []
         for label in item.source_labels:
@@ -3109,6 +3109,48 @@ def normalize_answer_markdown(answer: str) -> str:
             line = line.replace("**", "")
         normalized_lines.append(line)
     return re.sub(r"\n{3,}", "\n\n", "\n".join(normalized_lines)).strip()
+
+
+def format_chatbot_response(
+    answer: str,
+    evidence: Sequence[SearchResult],
+) -> str:
+    """Add a query-focused findings section and retain cited source documents."""
+    normalized = normalize_answer_markdown(answer)
+    if normalized == INSUFFICIENT_EVIDENCE_MESSAGE:
+        return normalized
+
+    for preamble in (
+        "The retrieved evidence supports:",
+        "The retrieved sources directly state:",
+    ):
+        if normalized.startswith(preamble):
+            normalized = normalized[len(preamble) :].lstrip()
+            break
+
+    if not normalized.startswith("### Core findings"):
+        normalized = f"### Core findings\n\n{normalized}"
+
+    if "### The retrieved evidence supports these documents" in normalized:
+        return normalized
+
+    cited_sources = set(FULL_CITATION_PATTERN.findall(normalized))
+    supporting_lines: list[str] = []
+    seen: set[tuple[str, str]] = set()
+    for result in evidence:
+        source = citation(result.doc_id, result.page)
+        key = (result.doc_id, source)
+        if source not in cited_sources or key in seen:
+            continue
+        supporting_lines.append(f"- **{result.title}** - {source}")
+        seen.add(key)
+
+    if supporting_lines:
+        normalized += (
+            "\n\n### The retrieved evidence supports these documents\n\n"
+            + "\n".join(supporting_lines)
+        )
+    return normalize_answer_markdown(normalized)
 
 
 def refine_document_listing(

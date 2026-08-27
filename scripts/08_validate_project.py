@@ -15,7 +15,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from src.conservation_intelligence.catalog import load_catalog, validate_catalog
+from src.conservation_intelligence.catalog import (
+    REQUIRED_DOC_IDS,
+    load_catalog,
+    validate_catalog,
+)
 from src.conservation_intelligence.evaluation import load_evaluation_spec
 from src.conservation_intelligence.paths import PROJECT_ROOT as APP_PROJECT_ROOT
 from src.conservation_intelligence.semantic import semantic_index_is_current
@@ -55,13 +59,21 @@ def main() -> int:
     raw_files: dict[str, Path] = {}
     checksums: dict[str, list[str]] = defaultdict(list)
 
-    for doc_id in sorted(expected_ids):
-        matches = list(raw_dir.glob(f"{doc_id}.*"))
-        if len(matches) != 1:
-            failures.append(f"{doc_id}: expected one raw artifact, found {len(matches)}")
+    resolved_raw_dir = raw_dir.resolve()
+    for row in sorted(catalog, key=lambda item: item["doc_id"]):
+        doc_id = row["doc_id"]
+        local_file = row.get("local_file", "").strip()
+        source_path = (APP_PROJECT_ROOT / local_file).resolve()
+        if not local_file or not source_path.is_relative_to(resolved_raw_dir):
+            failures.append(
+                f"{doc_id}: raw artifact path is missing or outside data/raw"
+            )
             continue
-        raw_files[doc_id] = matches[0]
-        checksums[sha256(matches[0])].append(doc_id)
+        if not source_path.is_file():
+            failures.append(f"{doc_id}: raw artifact is missing: {local_file}")
+            continue
+        raw_files[doc_id] = source_path
+        checksums[sha256(source_path)].append(doc_id)
 
     duplicate_groups = [ids for ids in checksums.values() if len(ids) > 1]
     for group in duplicate_groups:
@@ -251,7 +263,8 @@ def main() -> int:
         "",
         "## Required validation",
         "",
-        f"- Catalog contains exactly 35 sources: {'PASS' if len(expected_ids) == 35 else 'FAIL'}",
+        f"- Catalog contains exactly {len(REQUIRED_DOC_IDS)} sources: "
+        f"{'PASS' if len(expected_ids) == len(REQUIRED_DOC_IDS) else 'FAIL'}",
         f"- Every catalog source has one raw artifact: {'PASS' if len(raw_files) == len(expected_ids) else 'FAIL'}",
         f"- Every source is present and chunked in SQLite: {'PASS' if not missing_database_ids and not extra_database_ids and not locals().get('zero_chunk_ids', set()) else 'FAIL'}",
         f"- Wiki has at least 10 structurally valid pages: {'PASS' if len(wiki_files) >= 10 and not any('wiki/' in item for item in failures) else 'FAIL'}",

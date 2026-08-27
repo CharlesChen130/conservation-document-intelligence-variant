@@ -2,11 +2,13 @@
 
 ## Conservation Document Intelligence
 
-Version 1.0 — August 20, 2026
+Version 1.1 variant — August 26, 2026
+
+This manual covers the independent DOC036 variant.
 
 ## 1. Purpose
 
-Conservation Document Intelligence is a research application for searching and exploring 35 public conservation sources. It provides:
+Conservation Document Intelligence is a research application for searching and exploring 36 public conservation sources. It provides:
 
 - a filterable source catalog;
 - keyword and semantic search;
@@ -26,7 +28,7 @@ This manual is for:
 - developers running the application locally; and
 - administrators deploying or updating the Streamlit application.
 
-Sections 3–10 cover ordinary use. Sections 11–14 cover local installation and administration.
+Sections 3–10 cover ordinary use. Sections 11–16 cover local installation and administration.
 
 ## 3. Accessing the application
 
@@ -48,10 +50,10 @@ The application contains five tabs:
 
 | Tab | Use |
 |---|---|
-| Corpus | Browse the 35 sources, filter metadata, and open original documents |
+| Corpus | Browse the 36 sources, filter metadata, and open original documents |
 | Search | Retrieve page-aware evidence using keyword or semantic search |
-| Wiki | Read generated conservation pages with citations and related material |
-| Chatbot | Ask natural-language questions and inspect the evidence used |
+| Wiki | Choose an entity type, then an entity, and read its cited page |
+| Chatbot | Read core findings, supporting documents, and detailed retrieved evidence |
 | Evaluation | Review system counts and the 10 official requirement questions and saved answers |
 
 A research-prototype warning remains visible at the top of the application.
@@ -86,7 +88,7 @@ It displays:
 4. Review the filtered table.
 5. Select a link in the **Source** column to open the original public source.
 
-Clear the selected filters to restore all 35 records.
+Clear the selected filters to restore all 36 records.
 
 ### Document IDs
 
@@ -145,12 +147,13 @@ A typical label resembles:
 The Wiki tab contains 15 generated pages across species, habitats, locations, threats, and agencies.
 
 1. Open **Wiki**.
-2. Choose a page from the **Page** list.
-3. Read the summary and cited facts.
-4. Follow related-page links when available.
-5. Use the citations to verify the supporting source evidence.
+2. Choose an **Entity type** such as Species, Habitats, Locations, Threats, or Agencies.
+3. Choose an **Entity** within that type.
+4. Read the summary and cited facts.
+5. Follow related-page links when available.
+6. Use the citations to verify the supporting source evidence.
 
-Wiki pages are generated from stored corpus evidence. They are not general encyclopedia articles and should not be assumed to cover information outside the 35-source corpus.
+Wiki pages are generated from stored corpus evidence. Their build metadata is used for navigation and is intentionally hidden from page content. They are not general encyclopedia articles and should not be assumed to cover information outside the 36-source corpus.
 
 Some pages contain only one high-quality fact. This is intentional; the generator does not add weaker text merely to make every page longer.
 
@@ -165,8 +168,8 @@ The chatbot is enabled only when the administrator has configured `OPENAI_API_KE
 1. Open **Chatbot**.
 2. Enter one conservation question in the message field.
 3. Wait while the system retrieves and checks evidence.
-4. Read the answer.
-5. Expand **Retrieved evidence**.
+4. Read the query-focused **Core findings** and its cited supporting-document list.
+5. Expand **Retrieved evidence** to inspect the full passages used.
 6. Verify each material claim against the cited source passage.
 7. Open the source link when the answer will be used in research or decision-making.
 
@@ -259,6 +262,10 @@ The system can remove unsupported claims and retain supported ones. If an answer
 
 A message such as **The grounded answer could not be produced** can indicate a missing key, expired credit, rate limit, timeout, unavailable model, or temporary provider failure. Keyword search and the wiki should remain usable.
 
+### Known evaluation limitation
+
+The frozen DOC036-centered variant holdout scored 12 PASS, 5 PARTIAL, and 3 FAIL. All four required abstentions passed, but only 8 of 16 supported questions fully passed. The main weaknesses were selecting the exact section of the 566-page DOC036, competition from overlapping inherited documents, and losing requested facets during answer validation. Treat the application as a transparent research demonstration and verify material claims against the cited pages.
+
 ## 11. Running locally
 
 ### Prerequisites
@@ -273,7 +280,7 @@ A message such as **The grounded answer could not be produced** can indicate a m
 From WSL or a Linux terminal:
 
 ```bash
-cd /home/songxi/CDIP
+cd /home/songxi/CDIP-variant
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install --upgrade pip
@@ -335,23 +342,23 @@ Open <http://localhost:8501>. Stop the server with **Ctrl+C**.
 python -m pytest -q
 ```
 
-The complete source workspace currently passes 139 tests.
+The current variant workspace passes 145 automated tests. Run the complete suite after every corpus or behavior change.
 
 ## 12. Streamlit Community Cloud administration
 
 ### Deployment settings
 
-Connect Streamlit Community Cloud to the private GitHub repository and create an app with:
+Connect Streamlit Community Cloud to the independent variant GitHub repository and create an app with:
 
 | Setting | Value |
 |---|---|
-| Repository | `CharlesChen130/conservation-document-intelligence` |
+| Repository | `CharlesChen130/conservation-document-intelligence-variant` |
 | Branch | `main` |
 | Main file path | `app.py` |
 | Python version | 3.12 |
 | App URL | Administrator-selected available subdomain |
 
-The GitHub repository must grant Streamlit access to private repositories.
+The deploying GitHub account must have repository administrator permission. If the repository is private, grant Streamlit access to private repositories.
 
 ### Cloud secret
 
@@ -378,7 +385,7 @@ After deployment, review the app's sharing settings:
 - choose public access for an open demonstration; or
 - choose private access and add permitted viewers.
 
-A private repository does not automatically make the application private.
+A private repository does not automatically require the application to remain private. Community Cloud currently allows only one private app at a time; if the earlier CDIP deployment is private, make one app public or remove the older private app before keeping this variant private.
 
 ### Updating the application
 
@@ -391,26 +398,29 @@ A private repository does not automatically make the application private.
 
 ### Rollback
 
-If a release fails, revert the GitHub repository to the last known-good commit and push the change. The versioned database and index make restarts deterministic.
+If a release fails, run `git revert <bad-release-commit>` on `main` and push the new revert commit. This preserves a traceable history, and the versioned database and index make restarts deterministic.
 
 ## 13. Post-deployment acceptance checklist
 
 Confirm the following after first deployment and after material updates:
 
 - [ ] The application loads without a Python exception.
-- [ ] Corpus shows 35 source records.
+- [ ] Corpus shows 36 source records, including `DOC036`.
 - [ ] Agency and topic filters work.
 - [ ] Source links open the intended public documents.
 - [ ] Keyword search returns page-aware evidence for `wetland restoration`.
 - [ ] Keyword search returns page-aware evidence for `invasive carp`.
 - [ ] Semantic search works when the API secret is configured.
-- [ ] All 15 wiki pages render.
+- [ ] All 15 wiki pages render through **Entity type** then **Entity** navigation.
+- [ ] Wiki pages do not display YAML fields such as `generated_at` or `generation_method`.
 - [ ] The chatbot answers a supported question with document/page citations.
-- [ ] **Retrieved evidence** expands and matches the answer.
+- [ ] **Core findings**, the cited supporting-document list, and **Retrieved evidence** agree.
 - [ ] An out-of-corpus question produces an insufficient-evidence response.
-- [ ] Evaluation metrics show 724 chunks, 6,795 entity mentions, 987 relations, and 15 wiki pages.
+- [ ] Evaluation metrics show 982 chunks, 9,612 entity mentions, 1,389 relations, and 15 wiki pages.
 - [ ] The official 10-question evaluation report displays and downloads without internal engineering or holdout questions.
 - [ ] A reboot retains the same corpus and index without rebuilding.
+- [ ] App visibility matches the owner's intended public or private setting and does not alter the earlier CDIP app.
+- [ ] The deployed Git commit and final `*.streamlit.app` URL are recorded for rollback and handoff.
 - [ ] The OpenAI project usage dashboard shows expected, bounded activity.
 
 ## 14. Troubleshooting
@@ -448,7 +458,8 @@ Users must:
 - [Deployment guide](DEPLOYMENT.md)
 - [Technical implementation report](TECHNICAL_IMPLEMENTATION_REPORT.md)
 - [Project roadmap](ROADMAP.md)
-- [Requirements evaluation](outputs/requirements_evaluation.md)
-- [Current status report](outputs/status_report.md)
-- [Official answer audit](outputs/full_demo_correctness_audit.md)
-- [Final holdout audit](outputs/holdout_v4_first_run_audit.md)
+- [Variant requirements and acceptance record](VARIANT_REQUIREMENTS.md)
+- [Variant validator report](outputs/variant_status_report.md)
+- [Variant chatbot smoke audit](outputs/variant_acceptance_smoke.md)
+- [DOC036-centered holdout first-run audit](outputs/variant_holdout_v1_first_run_audit.md)
+- [Inherited official answer audit](outputs/full_demo_correctness_audit.md)

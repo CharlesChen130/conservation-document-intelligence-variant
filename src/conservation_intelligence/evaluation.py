@@ -33,10 +33,17 @@ class EvaluationRecord:
 
 def load_evaluation_spec(path: Path = EVALUATION_SPEC_PATH) -> dict[str, Any]:
     spec = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    required = ("official_questions", "additional_engineering_questions", "official_rubric")
+    required = (
+        "official_questions",
+        "additional_engineering_questions",
+        "variant_acceptance_questions",
+        "official_rubric",
+    )
     missing = [field for field in required if not isinstance(spec.get(field), list)]
     if missing:
         raise ValueError(f"Evaluation specification is missing lists: {', '.join(missing)}")
+    if len(spec["variant_acceptance_questions"]) != 3:
+        raise ValueError("The variant acceptance set must contain exactly 3 questions")
     if len(spec["official_questions"]) != 10:
         raise ValueError("The document-defined evaluation must contain exactly 10 questions")
     if sum(int(item["weight_percent"]) for item in spec["official_rubric"]) != 100:

@@ -35,6 +35,7 @@ from src.conservation_intelligence.chatbot import (
     answer_question,
     evidence_covers_query_scope,
     format_evidence,
+    format_chatbot_response,
     normalize_answer_markdown,
     load_wiki_pages,
     prune_uncited_units,
@@ -2826,3 +2827,25 @@ def test_page_number_gap_question_uses_stored_page_metadata(tmp_path):
     assert "[DOC999]" in result.answer
     assert result.generation_status == "deterministic"
     assert provider.calls == 0
+
+
+def test_chatbot_presentation_adds_core_findings_and_supporting_documents():
+    source = _result()
+    formatted = format_chatbot_response(
+        "The retrieved evidence supports:\n\n"
+        "- Wetlands provide habitat. [DOC999, p. 4]",
+        [source],
+    )
+
+    assert formatted.startswith("### Core findings")
+    assert "The retrieved evidence supports:" not in formatted
+    assert "### The retrieved evidence supports these documents" in formatted
+    assert "**Wetland Plan** - [DOC999, p. 4]" in formatted
+    assert validate_grounded_answer(formatted, [source]) == []
+
+
+def test_chatbot_presentation_preserves_explicit_abstention():
+    assert (
+        format_chatbot_response(INSUFFICIENT_EVIDENCE_MESSAGE, [_result()])
+        == INSUFFICIENT_EVIDENCE_MESSAGE
+    )

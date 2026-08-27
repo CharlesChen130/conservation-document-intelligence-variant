@@ -14,6 +14,7 @@ def test_holdout_set_is_frozen_unique_and_disjoint_from_development_questions():
         question.casefold()
         for question in [
             *development["official_questions"],
+            *development["variant_acceptance_questions"],
             *development["additional_engineering_questions"],
         ]
     }

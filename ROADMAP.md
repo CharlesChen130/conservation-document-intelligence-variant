@@ -1,255 +1,167 @@
-# Conservation Document Intelligence Prototype — Implementation Roadmap
+# Conservation Document Intelligence Variant — Release Roadmap
 
 ## Goal
 
-Build a reproducible Streamlit research prototype that organizes the 35 required public conservation sources, extracts page-aware text and structured conservation knowledge, generates evidence-backed wiki pages, and answers natural-language questions using inspectable source citations. Package the completed application for later deployment as a Docker-based Hugging Face Space.
+Publish the independent DOC036 variant as a reproducible Streamlit Community Cloud research demonstration while preserving its separate repository boundary, evidence provenance, immutable evaluation history, and disclosed limitations.
 
-The two supplied DOCX files are the source of truth. Where they allow alternatives, the defaults below keep the system small, testable, and deployable.
+The inherited prototype roadmap is complete historical context. This roadmap records the current variant release and the work required for strict acceptance after deployment.
 
-## Implementation snapshot
+## Current snapshot
 
-Phases 0–6 are implemented for the full 35-source corpus. The document-defined live evaluation and full official-answer self-audit are complete, and the relation-quality and wiki-quality repair gates pass. Phase 7 quality hardening is reopened because the corrected exact-chunk review of the first frozen 20-question holdout scored 7 PASS, 1 PARTIAL, and 12 FAIL, dominated by false abstentions on answerable paraphrases. The next work is a generic scope/claim-validation repair followed by a newly frozen holdout. Phase 8 packaging is present, but deployment remains gated on that quality repair, locally unavailable Docker, and the owner's Hugging Face credentials. Current evidence is recorded in `outputs/status_report.md`, `outputs/holdout_first_run_audit.md`, and `outputs/holdout_failure_analysis.md`.
+| Workstream | Status | Evidence or remaining action |
+|---|---|---|
+| Inherited prototype baseline | Complete | Baseline commit `ac698b715c55f42779c36182b85f193f3cd7c7ed` |
+| DOC036 corpus addition | Complete | `DOC036`, 566 pages, 258 chunks; provenance in `VARIANT_REQUIREMENTS.md` |
+| Variant runtime corpus | Complete | 36 documents and 982 page-aware chunks |
+| Semantic index | Complete | 982 vectors, 1,536 dimensions, current manifest |
+| Entity and relation layer | Automated checks complete | 9,612 mentions and 1,389 relations; manual DOC036 review remains |
+| Two-level Wiki | Implemented | 15 pages, 48 traceable facts, 83 resolving links; manual variant review remains |
+| Chatbot presentation | Implemented | Core findings, cited supporting-document list, evidence expander, and abstention |
+| Automated verification | Complete | 145 tests passing |
+| Variant development smoke | Complete | Three live development questions passed the recorded smoke audit |
+| DOC036-centered holdout V1 | Complete, strict gate failed | 12 PASS, 5 PARTIAL, 3 FAIL; immutable first-run audit retained |
+| GitHub publication | Pending owner action | Review, commit feature branch, fast-forward `main`, push variant repository |
+| Streamlit deployment | Pending owner action | Create separate app, add secret, choose URL/visibility, run cloud smoke test |
+| Strict variant acceptance | Blocked | Repair failure classes and pass a new untouched holdout |
 
-## Definition of done
+## Deployment versus acceptance
 
-The project is complete when all of the following are true:
+The application is deployable as a transparently labeled research demonstration. Deployment is useful for PI review and user evaluation, but it does not mean the strict acceptance gate passed.
 
-- `metadata.csv` contains traceable records for `DOC001` through `DOC035`, including documented failures and substitutions.
-- Available documents have page-aware extracted text and reproducible chunks.
-- Keyword and semantic search return snippets with document IDs, source URLs, and pages where available.
-- Entity and relationship outputs link every result to supporting chunks.
-- At least 10 useful wiki pages contain source-backed facts, related entities/documents, evidence, and open questions.
-- The Streamlit app provides Corpus, Search, Wiki, Chatbot, and Evaluation tabs.
-- Chatbot answers are restricted to retrieved evidence, use citations such as `[DOC012, p. 5]`, and explicitly abstain when evidence is insufficient.
-- The required demo questions have recorded results and manually checked citations.
-- Tests, setup documentation, Docker packaging, secret handling, and Hugging Face Space metadata are complete.
-- The app runs after a clean install and survives a container restart without rebuilding its corpus at startup.
+Strict acceptance remains blocked because:
 
-## Architecture and default choices
+- only 8 of 16 supported DOC036 holdout questions fully passed;
+- one answerable question falsely abstained;
+- two other supported questions failed due to incorrect facet/number selection or missed DOC036 evidence;
+- the DOC036-specific relation additions and regenerated Wiki still require manual domain review; and
+- the separate cloud smoke test has not yet been recorded.
 
-### Offline build pipeline
+## Completed PI requirements
 
-`source catalog -> acquisition -> text extraction -> chunks -> SQLite/search index -> entities/relations -> wiki pages -> evaluation artifacts`
+- [x] Add the PI-supplied 2022 Missouri Comprehensive Conservation Strategy as `DOC036`.
+- [x] Rebuild the variant metadata, SQLite/FTS corpus, vector index, entities, relations, and Wiki independently.
+- [x] Organize Wiki navigation first by **Entity type**, then by **Entity**.
+- [x] Hide generated YAML/front-matter fields from the rendered Wiki.
+- [x] Retain the chatbot's supporting-document list.
+- [x] Add a query-focused **Core findings** summary.
+- [x] Freeze, execute exactly once, and manually audit a 20-question DOC036-centered holdout.
+- [x] Preserve document/page citations, claim validation, and explicit abstention.
 
-The expensive and potentially fragile processing steps run through scripts and produce versioned artifacts. The deployed application reads those artifacts instead of downloading or rebuilding the corpus during startup.
+## Release path
 
-### Runtime application
+### 1. Local preflight — complete
 
-`Streamlit UI -> retrieval service -> cited evidence -> answer service`
+- [x] Confirm independent working directory, branch, and remote.
+- [x] Confirm `.env`, Streamlit secrets, local Codex context, and raw DOC036 are ignored.
+- [x] Confirm the committed runtime artifacts are small enough for normal GitHub publication.
+- [x] Run the complete suite: 145 passed.
+- [x] Verify the frozen evaluation and output hashes.
+- [x] Update public project, technical, user, deployment, requirements, and roadmap documentation.
 
-The UI will not contain core data-processing logic. Search, citation formatting, wiki access, and answering will be implemented in testable modules.
+### 2. Review and create the release commit — pending owner approval
 
-### Technology defaults
+Follow `DEPLOYMENT.md` to:
 
-- Python 3.11
-- Streamlit for the user interface
-- SQLite plus FTS5 for documents, chunks, structured outputs, and keyword search
-- A small local persisted semantic index as the reproducible default
-- Provider adapters for embeddings and answer generation, configured through environment variables
-- OpenAI File Search as an optional hosted retrieval backend, not a hard dependency on day one
-- `pypdf` for PDF extraction and BeautifulSoup for HTML extraction
-- Pydantic-style schemas or equivalent validation for LLM structured output
-- Pytest for unit, integration, and smoke tests
-- Docker on port 7860 for Hugging Face Spaces
+1. inspect all modified and new files;
+2. stage only the intended variant release;
+3. confirm no key, local context, raw attachment, or processed build file is staged;
+4. commit `feature/variant-pi-requirements`; and
+5. record the release commit hash.
 
-Exact dependency versions and the local vector implementation will be selected during scaffolding after compatibility checks. All provider-dependent features must fail clearly when credentials are absent; corpus browsing, wiki browsing, and keyword search should remain usable where practical.
+### 3. Publish the independent GitHub `main` branch — pending owner action
 
-## Execution phases
+- update local `main` from `origin/main` using fast-forward-only commands;
+- fast-forward merge `feature/variant-pi-requirements` into `main`;
+- rerun the full test suite; and
+- push `main` only to `CharlesChen130/conservation-document-intelligence-variant`.
 
-### Phase 0 — Repository foundation
+Do not rename the feature branch over `main`, force-push, change the remote, or push these artifacts to another CDIP repository.
 
-Deliverables:
+### 4. Create the separate Streamlit app — pending owner action
 
-- Initialize the repository and prescribed directory layout.
-- Add `README.md`, `requirements.txt` or equivalent lockable dependency specification, `.gitignore`, `.env.example`, `config.yaml`, and `Dockerfile` placeholder.
-- Add a `src/` package for reusable logic and keep numbered scripts as thin entry points.
-- Add project-root-relative path handling, structured logging, and configuration validation.
-- Create an idempotent SQLite schema initializer implementing the required tables and useful indexes.
-- Create a minimal Streamlit shell with the five required tabs.
-- Establish a test suite and a single command for local checks.
+- connect Streamlit Community Cloud to the variant GitHub repository;
+- deploy branch `main` and entrypoint `app.py` with Python 3.12;
+- choose a variant-specific `*.streamlit.app` URL;
+- select public or private application visibility independently of repository visibility;
+- configure the variant `OPENAI_API_KEY` through Streamlit Secrets; and
+- configure provider-side budget and usage monitoring.
 
-Acceptance gate:
+### 5. Run the cloud smoke test — pending
 
-- Clean environment installation succeeds.
-- Database initialization is repeatable.
-- Unit tests pass.
-- Streamlit starts and renders all five placeholder tabs.
+Verify the 36-document/982-chunk counts, DOC036 retrieval, semantic search, two-level Wiki navigation, hidden front matter, chatbot core findings and citations, correct abstention, official Evaluation UI scope, reboot behavior, and isolation from the earlier CDIP app.
 
-### Phase 1 — Corpus catalog and acquisition
+Record the deployed commit, app URL, visibility, smoke result, and rollback commit in the handoff record in `DEPLOYMENT.md`.
 
-Deliverables:
+## Post-deployment quality roadmap
 
-- Transcribe the complete 35-row dataset into `data/metadata.csv`.
-- Add fields needed for provenance: original URL, resolved/final URL, retrieval date, checksum, HTTP status, status, and substitution notes while retaining all required columns.
-- Implement resumable acquisition with timeouts, retries, descriptive user agent, content-type checks, and deterministic filenames.
-- Save direct PDFs and useful HTML/text snapshots under `data/raw/`.
-- For collection/search pages, select one representative public document and record the choice.
-- Produce an acquisition report without hiding unavailable or replaced sources.
+The existing V01–V20 set is now a known immutable regression set. It must not be presented as a fresh post-repair holdout.
 
-Acceptance gate:
+### A. Build separate diagnostic cases
 
-- Exactly 35 unique IDs exist.
-- At least 25 sources are acquired or validly represented, matching the Week 1 requirement.
-- Every unsuccessful source has a recorded reason; every replacement preserves the same agency/topic intent and both URLs.
-- Re-running acquisition does not redownload unchanged files unnecessarily.
+Create development-only cases for these failure classes:
 
-### Phase 2 — Text extraction and normalization
+1. exact section selection in a long, internally repetitive document;
+2. competition between DOC036 and overlapping inherited sources;
+3. multi-facet coverage surviving generation and claim pruning; and
+4. validating that a cited number answers the requested aggregation.
 
-Deliverables:
+### B. Implement general repairs
 
-- Extract text from PDFs page by page with visible page separators.
-- Extract meaningful content from saved HTML/text while removing navigation boilerplate where possible.
-- Record page count, character count, extraction method, warnings, and failures.
-- Detect nearly empty/scanned PDFs and expose an optional OCR path if needed.
-- Save normalized UTF-8 text under `data/processed/DOCxxx.txt`.
+Potential repair directions include section-aware retrieval metadata, long-document diversification, preference rules when a question explicitly names DOC036, improved multi-facet evidence selection, and requested-number/aggregation validation. Repairs must address general failure types rather than memorizing V01–V20.
 
-Acceptance gate:
+### C. Re-run known regressions
 
-- Text extraction works for at least 15 documents first, then all usable acquired sources.
-- Extracted pages retain stable source-page identifiers.
-- Empty, corrupt, or suspicious extraction results are reported instead of silently indexed.
+After repairs:
 
-### Phase 3 — Chunking, database, and retrieval
+- run targeted diagnostic tests;
+- run the full automated suite;
+- replay inherited engineering regressions;
+- replay V01–V20 only as known regression evidence; and
+- check safety, citation, latency, and token-cost regressions.
 
-Deliverables:
+### D. Freeze a new untouched holdout
 
-- Create deterministic 600–900-word chunks with approximately 100-word overlap without crossing document boundaries.
-- Store document and chunk records in SQLite with `doc_id`, `chunk_id`, page/page range, text, title, topic, agency, and source URL.
-- Implement SQLite FTS5 keyword search.
-- Build a persisted semantic index and an embedding manifest that records model and content hashes.
-- Implement a common retrieval interface supporting keyword, semantic, and later hosted backends.
-- Add metadata filters and hybrid ranking if it materially improves the required questions.
+Design a new balanced holdout that is disjoint from development, official, engineering, and V01–V20 questions. Freeze its specification and relevant input hashes before the first execution. Strict acceptance requires this fresh set to satisfy the approved threshold.
 
-Acceptance gate:
+### E. Complete independent review
 
-- Every indexed chunk maps to exactly one document and inspectable source location.
-- Index creation is incremental or safely repeatable.
-- Search returns title, document ID, URL, page, score, and snippet.
-- A fixed retrieval test set produces relevant evidence for the core wetland, invasive-species, waterfowl, and Missouri-planning questions.
+Before consequential use, obtain and record conservation-domain review of:
 
-### Phase 4 — Entity and relationship extraction
+- the 402 DOC036-derived relations;
+- the regenerated 48-fact Wiki;
+- representative DOC036 answers and citations; and
+- the language used to disclose research-prototype limitations.
 
-Deliverables:
+## Release and acceptance gates
 
-- Define validated entity types: species, habitat, river, wetland, agency, location, threat, program, policy, and date.
-- Define the required relationship types and a small extension policy if useful relations are discovered.
-- Combine deterministic extraction for simple cases with schema-constrained LLM extraction for ambiguous cases.
-- Normalize aliases, capitalization, abbreviations, and duplicate entities while preserving the original mention.
-- Store confidence, evidence, document ID, and chunk ID for every extracted item.
-- Export `outputs/entities.csv` and `outputs/relations.csv` from canonical database records.
+| Gate | Research-demo deployment | Strict acceptance |
+|---|---:|---:|
+| 36-document runtime corpus complete | Required; complete | Required; complete |
+| Current 982-vector semantic index | Required; complete | Required; complete |
+| 145 automated tests | Required; complete | Required; complete |
+| Secrets excluded from Git | Required; complete locally | Required |
+| Variant holdout disclosed | Required; complete | Not sufficient |
+| DOC036 V1 strict holdout pass | Not required if failure is disclosed | Failed |
+| New untouched post-repair holdout | Not required for demo | Pending |
+| Manual DOC036 knowledge review | Recommended | Pending |
+| Separate Streamlit cloud smoke | Pending | Pending |
+| Domain-expert certification | Recommended | Pending |
 
-Acceptance gate:
+## Repository and deployment boundary
 
-- CSV schemas are stable and validated.
-- Every relation includes inspectable supporting evidence.
-- A manually reviewed sample across several documents shows understandable, useful results with duplicates controlled.
-- Pipeline behavior is documented when no LLM key is configured.
+- Work and artifacts remain in `/home/songxi/CDIP-variant`.
+- The only configured GitHub destination is `CharlesChen130/conservation-document-intelligence-variant`.
+- The deployment uses a separate Streamlit app, URL, visibility setting, secret, and rollback record.
+- Raw DOC036 and local requirement inputs remain uncommitted; versioned derived artifacts provide the runtime corpus.
+- Changes are not copied into another CDIP repository without explicit review and authorization.
 
-### Phase 5 — Evidence-backed LLM Wiki
+## Owner decisions still required
 
-Deliverables:
-
-- Rank candidate entities by frequency, source diversity, and relevance to required demo questions.
-- Generate 10–20 Markdown pages across the required category folders.
-- Include summary, key facts, related documents, related entities, evidence snippets, open questions, and citations on every factual statement.
-- Add reproducible slugs, front matter, and database records for wiki pages.
-- Implement link validation and citation validation.
-- Build the Streamlit Wiki browser.
-
-Acceptance gate:
-
-- At least 10 pages pass structural and citation checks.
-- Wiki facts can be traced to stored chunks.
-- Related-document and related-entity navigation works.
-- Regeneration is safe and produces a reviewable change rather than silently overwriting curated content.
-
-### Phase 6 — Streamlit product and grounded chatbot
-
-Deliverables:
-
-- Corpus tab with filters, source links, and processing status.
-- Search tab with keyword/semantic modes, metadata filters, snippets, scores, and citation details.
-- Wiki tab with category navigation and rendered Markdown.
-- Chatbot tab with conversation state, retrieval inspection, source links, and cited answers.
-- Evaluation tab with required questions, saved evaluation artifacts, and an external-feedback link placeholder.
-- Research prototype disclaimer and visible configuration diagnostics.
-- Prompt and post-generation checks that require supported citations and explicit insufficient-evidence responses.
-- Sensible limits for query and response length, retrieval size, retries, and provider errors.
-
-Acceptance gate:
-
-- All five tabs work with project-relative paths.
-- Every factual chatbot answer contains valid corpus citations.
-- Invalid or invented document IDs are rejected or surfaced as an error.
-- Evidence-poor questions trigger an abstention rather than unsupported prose.
-- The app remains useful in a reduced mode when optional API configuration is absent.
-
-### Phase 7 — Evaluation and quality hardening
-
-Deliverables:
-
-- Add the 10 required demo questions and 5 useful edge/adversarial questions.
-- Capture retrieved chunks, generated answers, latency, citations, and reviewer notes in `outputs/demo_answers.md` or a generated equivalent.
-- Add automated checks for metadata integrity, database references, index freshness, wiki structure, citation syntax, cited-document existence, and app startup.
-- Manually verify the chain `claim -> citation -> source evidence` for the final demonstration set.
-- Document limitations, failed sources, substitutions, known weak answers, and reproducibility steps.
-
-Acceptance gate:
-
-- All required questions have recorded pass/fail outcomes.
-- At least five representative chatbot answers are fully citation-audited for the demo.
-- Critical tests pass from a clean checkout/build.
-- No secret, local absolute path, or private document is present.
-
-### Phase 8 — Hugging Face packaging and handoff
-
-Deliverables:
-
-- Finalize the Python 3.11 slim Docker image and Streamlit port 7860 configuration.
-- Add Hugging Face Space front matter to the README.
-- Prepackage metadata, database/index artifacts as appropriate, wiki pages, entities, relations, and evaluation material.
-- Configure `OPENAI_API_KEY`, optional `VECTOR_STORE_ID`, model selection, and feedback URL through environment variables only.
-- Test container build, startup, health, all tabs, citation links, missing-secret behavior, and restart behavior.
-- Add deployment steps, testing instructions, known limitations, and cost-control guidance.
-
-Acceptance gate before external deployment:
-
-- Docker image builds and runs locally.
-- The app does not download or rebuild the corpus at normal startup.
-- API credentials exist only in deployment secrets.
-- Basic CPU hosting is sufficient.
-- The deployment acceptance checklist from the supplied guide is satisfied except for items requiring the owner's accounts or external reviewers.
-
-## Autonomous working rules
-
-During implementation I can independently:
-
-- choose small internal libraries and module boundaries;
-- repair or replace broken public-source URLs while documenting provenance;
-- improve schemas without removing required fields;
-- add tests, fixtures, caches, validation, and developer documentation;
-- use a small corpus subset to prove each vertical slice, then scale it;
-- change a recommended implementation detail when compatibility or reliability requires it, while preserving the stated outcomes.
-
-I will stop and request input only when progress requires authority or information I cannot safely infer, principally:
-
-- an OpenAI API key or approval of another paid model/embedding provider;
-- a Hugging Face account/Space and permission to publish or push;
-- a GitHub destination and permission to push, if remote publication is desired;
-- selection or access to an external survey service;
-- acceptance of material ongoing API cost or public exposure.
-
-The system will be designed and tested locally before any of those external actions are required.
-
-## Progress tracking
-
-At the end of each phase:
-
-1. Run the phase's automated and smoke tests.
-2. Record completed deliverables and known issues in the README or a generated status report.
-3. Keep generated-data provenance visible.
-4. Move forward only after the acceptance gate is met, or document why a noncritical exception is safe.
-
-## Recommended implementation order
-
-The first end-to-end slice will use 3–5 diverse documents and exercise acquisition, page extraction, chunking, search, one extraction pass, one wiki page, and one cited answer. Once that slice is reliable, the corpus will scale to all 35 records. This exposes integration and citation problems early while keeping the final pipeline identical to the full build.
+- approve the staged release contents and commit;
+- push the variant `main` branch;
+- choose GitHub repository visibility;
+- authorize Streamlit access to the repository;
+- choose the Streamlit URL and application visibility;
+- enter the variant API key and configure its budget;
+- run and record the cloud smoke test; and
+- decide whether to begin the post-deployment quality-repair cycle.
