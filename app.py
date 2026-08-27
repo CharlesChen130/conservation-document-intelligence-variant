@@ -190,8 +190,8 @@ with chatbot_tab:
     if not api_configured:
         st.warning("OPENAI_API_KEY is not configured; provider-based answering is disabled.")
     st.caption(
-        "Answers use retrieved corpus evidence only. Expand the evidence below each answer "
-        "and verify important claims against the linked source."
+        "Supporting documents are cited directly in Core findings. All retrieved evidence "
+        "includes every passage considered, including passages not cited in the final answer."
     )
     if "chat_messages" not in st.session_state:
         st.session_state.chat_messages = []
@@ -200,7 +200,11 @@ with chatbot_tab:
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
             if message.get("sources"):
-                with st.expander("Retrieved evidence"):
+                with st.expander("All retrieved evidence"):
+                    st.caption(
+                        "Passages considered during answer generation; not every passage "
+                        "is cited in Core findings."
+                    )
                     for source in message["sources"]:
                         st.markdown(
                             f"**{source['citation']} — {source['title']}** · "
@@ -249,7 +253,11 @@ with chatbot_tab:
                         st.markdown(display_answer)
                         sources = []
                         if result.evidence:
-                            with st.expander("Retrieved evidence"):
+                            with st.expander("All retrieved evidence"):
+                                st.caption(
+                                    "Passages considered during answer generation; not every "
+                                    "passage is cited in Core findings."
+                                )
                                 for item in result.evidence:
                                     page = (
                                         f"pp. {item.page}"

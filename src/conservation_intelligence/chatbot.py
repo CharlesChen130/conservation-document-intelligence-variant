@@ -3148,6 +3148,7 @@ def format_chatbot_response(
     if supporting_lines:
         normalized += (
             "\n\n### Supporting documents\n\n"
+            "*Sources cited directly in the core findings.*\n\n"
             + "\n".join(supporting_lines)
         )
     return normalize_answer_markdown(normalized)
