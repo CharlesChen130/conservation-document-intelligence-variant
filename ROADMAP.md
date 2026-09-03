@@ -45,7 +45,7 @@ Strict acceptance remains blocked because:
 - [x] Retain the chatbot's supporting-document list.
 - [x] Add a query-focused **Core findings** summary.
 - [x] Replace count-only Wiki summaries with cited entity information and move mention/document statistics to **Corpus coverage**.
-- [x] Present a direct **Answer** before renamed **Key supporting findings**, while deriving both from the same validated claims.
+- [x] Present a model-authored direct **Answer** from the same structured call before **Key supporting findings**; validate it against the surviving claims and use a claim-derived fallback when needed.
 - [x] Freeze, execute exactly once, and manually audit a 20-question DOC036-centered holdout.
 - [x] Preserve document/page citations, claim validation, and explicit abstention.
 
@@ -140,7 +140,7 @@ Before consequential use, obtain and record conservation-domain review of:
 |---|---:|---:|
 | 36-document runtime corpus complete | Required; complete | Required; complete |
 | Current 982-vector semantic index | Required; complete | Required; complete |
-| 145 automated tests | Required; complete | Required; complete |
+| 148 automated tests | Required; complete | Required; complete |
 | Secrets excluded from Git | Required; complete locally | Required |
 | Variant holdout disclosed | Required; complete | Not sufficient |
 | DOC036 V1 strict holdout pass | Not required if failure is disclosed | Failed |

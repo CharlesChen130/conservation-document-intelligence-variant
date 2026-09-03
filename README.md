@@ -25,7 +25,7 @@ The PI-requested corpus, Wiki, and chatbot changes are implemented. The separate
 - 15 validated wiki pages across species, habitats, locations, threats, and agencies; 27/27 cited summary statements and 36/36 additional, nonduplicated key facts trace to stored evidence, and 83/83 internal links resolve
 - five working Streamlit tabs: Corpus, Search, Wiki, Chatbot, and Evaluation
 - a current 982-vector, 1,536-dimensional FAISS semantic index
-- 145 automated tests passing
+- 148 automated tests passing
 - three live variant development questions passed grounding, citation, core-findings, and supporting-document smoke checks
 - DOC036-centered frozen holdout: 12 PASS, 5 PARTIAL, 3 FAIL; all 4 required abstentions passed, but only 8/16 supported questions fully passed
 - the public Evaluation UI exposes only the 10 document-defined questions; 5 additional engineering checks remain in the internal saved evaluation artifact
@@ -66,7 +66,7 @@ The versioned `db/conservation.db` is the complete runtime corpus, so the app do
 | Semantic retrieval | current persisted FAISS index using OpenAI embeddings | Live query/rebuild requires API key |
 | Structured knowledge | rule-based typed entities and five required relation types, each tied to evidence | Yes |
 | Wiki | two-level entity-type/entity navigation over 15 evidence-ranked pages; cited entity summaries are separated from corpus-coverage metadata and generated front matter is hidden | Yes |
-| Chatbot | direct claim-derived answer first, key supporting findings, cited supporting-document list, all-evidence expander, citation validation, and abstention | Requires API key |
+| Chatbot | validated model-authored answer from the same structured call, safe claim-derived fallback, key supporting findings, cited supporting-document list, all-evidence expander, and abstention | Requires API key |
 | Evaluation | 10 official questions in the public UI; 5 engineering checks, known regression sets, and holdouts retained as internal evaluation artifacts | Yes |
 
 ## Rebuild pipeline

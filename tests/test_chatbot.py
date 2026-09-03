@@ -21,6 +21,7 @@ from src.conservation_intelligence.chatbot import (
     _comparison_retrieval_queries,
     _coverage_terms,
     _deduplicate_document_claims,
+    _direct_answer_errors,
     _entity_action_proximity_score,
     _extractive_or_fallback,
     _mandatory_question_facets,
@@ -247,6 +248,94 @@ def test_one_call_provider_combines_sufficiency_generation_and_support(tmp_path)
     assert provider.grounded_calls == 1
     assert provider.answer_calls == 0
 
+
+def test_one_call_provider_uses_model_authored_direct_answer_without_followup(tmp_path):
+    database_path = _database_with_wetland_chunk(tmp_path)
+    provider = FakeOneCallProvider(
+        StructuredGroundedDecision(
+            sufficient=True,
+            claims=(
+                AtomicGroundedClaim(
+                    claim="Wetlands provide habitat for waterfowl",
+                    source_labels=("S1",),
+                    supporting_spans=("Wetlands provide habitat for waterfowl.",),
+                ),
+            ),
+            direct_answer="Overall, wetlands provide habitat for waterfowl. [S1]",
+        )
+    )
+
+    result = answer_question(
+        "What habitat do wetlands provide?",
+        provider,
+        database_path=database_path,
+        wiki_dir=tmp_path / "wiki",
+    )
+
+    assert result.answer.startswith(
+        "### Answer\n\nOverall, wetlands provide habitat for waterfowl. "
+        "[DOC999, p. 4]"
+    )
+    assert "### Key supporting findings" in result.answer
+    assert provider.grounded_calls == 1
+    assert provider.answer_calls == 0
+
+
+def test_direct_answer_requires_a_citation_after_each_factual_sentence():
+    decision = StructuredGroundedDecision(
+        sufficient=True,
+        claims=(
+            AtomicGroundedClaim(
+                claim="Wetlands provide habitat for waterfowl",
+                source_labels=("S1",),
+                supporting_spans=("Wetlands provide habitat for waterfowl.",),
+            ),
+        ),
+        direct_answer=(
+            "Wetlands provide habitat. Wetlands provide habitat for waterfowl. [S1]"
+        ),
+    )
+
+    assert any(
+        "without its own citation" in error
+        for error in _direct_answer_errors(
+            decision,
+            question="What habitat do wetlands provide?",
+        )
+    )
+
+def test_one_call_provider_falls_back_when_direct_answer_adds_unsupported_facts(tmp_path):
+    database_path = _database_with_wetland_chunk(tmp_path)
+    provider = FakeOneCallProvider(
+        StructuredGroundedDecision(
+            sufficient=True,
+            claims=(
+                AtomicGroundedClaim(
+                    claim="Wetlands provide habitat for waterfowl",
+                    source_labels=("S1",),
+                    supporting_spans=("Wetlands provide habitat for waterfowl.",),
+                ),
+            ),
+            direct_answer=(
+                "Wetlands provide habitat for waterfowl and reduce flooding by 50 percent. "
+                "[S1]"
+            ),
+        )
+    )
+
+    result = answer_question(
+        "What habitat do wetlands provide?",
+        provider,
+        database_path=database_path,
+        wiki_dir=tmp_path / "wiki",
+    )
+
+    answer_section = result.answer.split("### Key supporting findings", 1)[0]
+    assert "Wetlands provide habitat for waterfowl. [DOC999, p. 4]" in answer_section
+    assert "reduce flooding" not in answer_section
+    assert "50 percent" not in answer_section
+    assert provider.grounded_calls == 1
+    assert provider.answer_calls == 0
 
 def test_one_call_provider_abstains_without_any_followup_call(tmp_path):
     database_path = _database_with_wetland_chunk(tmp_path)
@@ -1886,6 +1975,7 @@ def test_openai_grounded_answer_uses_one_strict_structured_response_call():
                     {
                         "decision": "sufficient",
                         "reason": "The source directly supports the claim.",
+                        "direct_answer": "Wetlands provide habitat for waterfowl. [S1]",
                         "missing_information": [],
                         "claims": [
                             {
@@ -1912,13 +2002,18 @@ def test_openai_grounded_answer_uses_one_strict_structured_response_call():
     )
 
     assert decision.sufficient is True
+    assert decision.direct_answer == "Wetlands provide habitat for waterfowl. [S1]"
     assert decision.claims[0].source_labels == ("S1",)
     assert len(fake_responses.calls) == 1
     request = fake_responses.calls[0]
     assert request["text"]["format"]["type"] == "json_schema"
     assert request["text"]["format"]["strict"] is True
     assert "Mandatory answer facets" in request["input"]
-    claim_schema = request["text"]["format"]["schema"]["properties"]["claims"]
+    assert "direct_answer must answer the question" in request["instructions"]
+    response_schema = request["text"]["format"]["schema"]
+    assert "direct_answer" in response_schema["required"]
+    assert response_schema["properties"]["direct_answer"]["maxLength"] == 1200
+    claim_schema = response_schema["properties"]["claims"]
     assert claim_schema["items"]["properties"]["source_labels"]["maxItems"] == 1
     assert claim_schema["items"]["properties"]["supporting_spans"]["maxItems"] == 1
     assert request["store"] is False

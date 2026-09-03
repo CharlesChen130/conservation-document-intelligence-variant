@@ -185,14 +185,15 @@ The production chatbot follows a guarded retrieval-augmented generation pipeline
 8. Add relevant neighboring chunks and remove low-information evidence.
 9. Rank by question-scope coverage and choose facet-balanced evidence, normally six chunks with no more than two per document.
 10. Reject the question before generation when retrieved evidence does not cover required scope.
-11. Make one structured OpenAI Responses API call requesting a sufficiency decision and up to five atomic claims.
+11. Make one structured OpenAI Responses API call requesting a sufficiency decision, a concise direct answer, and up to five atomic supporting claims.
 12. Require every claim to provide one authorized source label and an exact supporting span.
 13. Repair label collisions and narrow invalid ellipses without making another model call.
 14. Remove invalid claims; require surviving claims to cover mandatory question facets.
-15. Resolve internal labels to citations such as `[DOC012, p. 5]`.
-16. Run final citation, claim-support, numeric-copying, scope, and formatting checks.
-17. Return an extractive fallback or the explicit insufficient-evidence response if validation cannot establish support.
-18. At presentation time, compose **Answer** only from the validated cited claim units, then show the same units as **Key supporting findings**, followed by cited supporting documents and all retrieved evidence.
+15. Accept the model-authored direct answer only when every factual sentence is source-labelled, its labels refer to surviving claims, its terms and numbers occur in those claims, and it covers the mandatory question facets.
+16. If the direct answer fails those checks, compose a safe direct answer locally from the validated claim units; do not make another model call.
+17. Resolve internal labels to citations such as `[DOC012, p. 5]`.
+18. Run final citation, claim-support, numeric-copying, scope, and formatting checks.
+19. Return an extractive fallback or the explicit insufficient-evidence response if validation cannot establish support; otherwise present **Answer**, **Key supporting findings**, cited supporting documents, and all retrieved evidence.
 
 The normal supported path uses one query-embedding call and at most one chat-model call. Defaults are `gpt-4.1-mini`, six evidence items, 20 retrieval candidates, and 1,000 output tokens. The UI additionally limits each browser session to 20 chatbot questions.
 
@@ -330,7 +331,7 @@ Community Cloud can hibernate after inactivity. A restart loses browser session 
 | Searchable documents | SQLite FTS5 and FAISS over 982 page-aware chunks |
 | Structured entities and relations | 9,612 mentions, 1,389 evidence-linked relations, five required relation types |
 | Evidence-backed wiki | Two-level navigation over 15 Markdown pages with 27 cited summary statements, 36 additional nonduplicated key facts, separate corpus coverage, and 83 valid links |
-| Cited chatbot | Direct claim-derived answer first, key supporting findings, cited supporting-document list, detailed evidence, and deterministic validation |
+| Cited chatbot | Validated model-authored answer from the same structured call, safe claim-derived fallback, key supporting findings, cited supporting-document list, detailed evidence, and deterministic validation |
 | Evaluation questions and rubric | `outputs/demo_answers.md`, correctness audits, holdouts, and `outputs/requirements_evaluation.md` |
 | Deployable interface | Five-tab `app.py`, pinned dependencies, persisted artifacts, Streamlit deployment guide |
 | Secret protection | `.gitignore`, `.env.example`, and Streamlit Secrets workflow |

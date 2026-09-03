@@ -57,9 +57,10 @@ The variant may be accepted only after all of the following are recorded:
 - Streamlit and Wiki tests confirm entity-type/entity navigation, cited entity
   information in Summary, separately labelled Corpus coverage, optional Key facts
   containing only additional evidence, and no raw front matter in rendered content;
-- chatbot presentation tests confirm an `Answer` section appears before
-  `Key supporting findings`, that the supporting-document list is derived only
-  from cited evidence, and that explicit abstention behavior is unchanged;
+- chatbot tests confirm that the same structured model call returns `Answer`
+  and `Key supporting findings`, that the direct answer is constrained to the
+  surviving cited claims with a safe local fallback, that the supporting-document
+  list is derived only from cited evidence, and that abstention is unchanged;
 - inherited official/demo and engineering regressions are rerun after the
   corpus change, while their historical results remain distinguishable from
   the new variant run;
@@ -78,9 +79,9 @@ The variant may be accepted only after all of the following are recorded:
 
 Corpus ingestion, SQLite/FTS, entity/relation extraction, Wiki regeneration,
 two-level Wiki presentation, hidden front matter, cited entity summaries separated
-from corpus coverage and nonduplicated additional key facts, answer-first chatbot
-presentation, and the 982-vector FAISS
-rebuild are implemented. The full suite passes 145 tests.
+from corpus coverage and nonduplicated additional key facts, same-call model-authored
+chatbot answers with a validated claim-derived fallback, and the 982-vector FAISS
+rebuild are implemented. The full suite passes 148 tests.
 The project validator passes all structural gates and reports only the frozen
 failed holdout gate. All three live variant development questions passed the
 grounding and presentation smoke review recorded in

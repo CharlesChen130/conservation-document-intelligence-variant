@@ -169,8 +169,8 @@ The chatbot is enabled only when the administrator has configured `OPENAI_API_KE
 1. Open **Chatbot**.
 2. Enter one conservation question in the message field.
 3. Wait while the system retrieves and checks evidence.
-4. Read **Answer** first; it directly combines the already validated claims that address the question.
-5. Review **Key supporting findings** for the same claims point by point.
+4. Read **Answer** first; it is the concise answer returned in the same structured model call and accepted only when it stays within the validated supporting claims.
+5. Review **Key supporting findings** for the validated claims point by point. If the model-authored answer does not pass its checks, the app safely builds **Answer** from these claims without another model call.
 6. Review **Supporting documents** for the sources cited by those claims.
 7. Expand **All retrieved evidence** to inspect every passage considered, including uncited candidates.
 8. Verify each material claim against the cited source passage and open the source when the answer will be used in research or decision-making.
@@ -344,7 +344,7 @@ Open <http://localhost:8501>. Stop the server with **Ctrl+C**.
 python -m pytest -q
 ```
 
-The current variant workspace passes 145 automated tests. Run the complete suite after every corpus or behavior change.
+The current variant workspace passes 148 automated tests. Run the complete suite after every corpus or behavior change.
 
 ## 12. Streamlit Community Cloud administration
 
@@ -416,7 +416,7 @@ Confirm the following after first deployment and after material updates:
 - [ ] All 15 wiki pages render through **Entity type** then **Entity** navigation.
 - [ ] Wiki summaries contain cited entity information, corpus counts appear separately under **Corpus coverage**, and YAML fields such as `generated_at` remain hidden.
 - [ ] The chatbot answers a supported question with document/page citations.
-- [ ] **Answer** appears first and agrees with **Key supporting findings**, **Supporting documents**, and **All retrieved evidence**.
+- [ ] **Answer** appears first, directly answers the question, and agrees with **Key supporting findings**, **Supporting documents**, and **All retrieved evidence**.
 - [ ] An out-of-corpus question produces an insufficient-evidence response.
 - [ ] Evaluation metrics show 982 chunks, 9,612 entity mentions, 1,389 relations, and 15 wiki pages.
 - [ ] The official 10-question evaluation report displays and downloads without internal engineering or holdout questions.
