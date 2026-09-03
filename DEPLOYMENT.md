@@ -68,7 +68,7 @@ Expected runtime counts are:
 - 982 page-aware chunks, including 258 from `DOC036`;
 - 9,612 entity mentions;
 - 1,389 evidence-linked relations;
-- 15 wiki pages, 48 validated facts, and 83 resolving links; and
+- 15 wiki pages, 27 cited summary statements, 36 additional key facts, and 83 resolving links; and
 - 982 FAISS vectors with 1,536 dimensions.
 
 The DOC007/DOC008 byte-identity warning is expected and documented.

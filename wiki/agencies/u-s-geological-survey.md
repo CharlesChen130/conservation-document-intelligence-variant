@@ -3,7 +3,7 @@ title: "U.S. Geological Survey"
 entity_type: agency
 mentions: 96
 documents: 14
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,10 +22,10 @@ Corpus extraction recorded 96 mentions of **U.S. Geological Survey** across 14 p
 
 ## Key facts
 
-- USGS will continue to inform managers of invasive carp expansions (for example, as documented by Larson and others, 2017) and provide new tools for early detection and rapid response (for example, Hayer and others, 2020). [DOC012, pp. 22-24]
-- USGS personnel with, or as members of, these organizations will help to recognize and promote related science needs for AIS management. [DOC005, pp. 31-33]
 - U.S. Geological Survey estimated that manufacturing companies used more than nine trillion gallons of fresh water per year, approximately four percent more than they had used in 1990. [DOC031, pp. 9-11]
 - USGS study (Heimann 2009) was conducted to identify and quantify the effects of prairie conversion on the hydrology and water quality of small streams in eastern Kansas and western Missouri. [DOC036, pp. 136-138]
+- USGS collaborated with partners across the country to detect, control, and eradicate (when possible) nutria and restore damaged marsh habitat. [DOC007, pp. 16-22]
+- USGS scientists, and university partners leveraged funding and took action to manage these invaders and increase restoration efforts. [DOC008, pp. 13-17]
 
 ## Related documents
 

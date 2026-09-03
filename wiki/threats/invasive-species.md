@@ -3,7 +3,7 @@ title: "Invasive species"
 entity_type: threat
 mentions: 260
 documents: 23
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,8 +22,6 @@ Corpus extraction recorded 260 mentions of **Invasive species** across 23 public
 
 ## Key facts
 
-- In the past year, the Invasive Species Program has been reactivated with the placement of the invasive species coordinator position and the reestablishment of the Invasive Species Working Group. [DOC017]
-- These objectives and corresponding action items are identified in the 2009 USACE Invasive Species Policy and have been refined by the ISLT. [DOC006, pp. 13-15]
 - Maintain desired ecosystems throughout the forest with few occurrences of nonnative invasive species. [DOC036, pp. 27-30]
 - Nearly every aquatic ecosystem restoration project undertaken by USACE involves some form of invasive species consideration – whether species removal prior to restoration or management thereafter to prevent new invasions post restoration. [DOC006, pp. 3-4]
 

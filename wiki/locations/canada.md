@@ -3,7 +3,7 @@ title: "Canada"
 entity_type: location
 mentions: 176
 documents: 17
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,10 +22,9 @@ Corpus extraction recorded 176 mentions of **Canada** across 17 public documents
 
 ## Key facts
 
-- Canada will also convene an international panel of experts in May 1991 to develop the framework for a global protocol to protect the marine environment from all sources of pollution. [DOC034, pp. 54-57]
-- In eastern Canada and British Columbia, researchers are finding new ways to monitor elusive waterfowl. [DOC014, pp. 7-8]
 - Canada and the United States signed a treaty for the conservation of migratory birds, and in 1936 the United States and Mexico signed a similar convention. [DOC003, pp. 12-14]
 - Canada has undertaken extensive public education and information-transfer 153 initiatives, including measures in the area of technology demonstration, evaluation and transfer. [DOC034, pp. 167-170]
+- About 85% of the nation’s critical wetlands are in the Western Boreal Forest (WBF), and roughly 40% of North America’s waterfowl breed here. [DOC014, pp. 28-31]
 
 ## Related documents
 

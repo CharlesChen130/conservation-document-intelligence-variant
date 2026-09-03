@@ -15,7 +15,7 @@ The inherited prototype roadmap is complete historical context. This roadmap rec
 | Variant runtime corpus | Complete | 36 documents and 982 page-aware chunks |
 | Semantic index | Complete | 982 vectors, 1,536 dimensions, current manifest |
 | Entity and relation layer | Automated checks complete | 9,612 mentions and 1,389 relations; manual DOC036 review remains |
-| Two-level Wiki | Implemented | 15 pages with cited entity summaries separated from corpus coverage, 48 traceable facts, and 83 resolving links; manual variant review remains |
+| Two-level Wiki | Implemented | 15 pages with 27 cited summary statements, 36 additional nonduplicated key facts, separate corpus coverage, and 83 resolving links; manual review remains |
 | Chatbot presentation | Implemented | Direct answer first, key supporting findings, cited supporting-document list, all-evidence expander, and abstention |
 | Automated verification | Complete | 145 tests passing |
 | Variant development smoke | Complete | Three live development questions passed the recorded smoke audit |
@@ -130,7 +130,7 @@ Design a new balanced holdout that is disjoint from development, official, engin
 Before consequential use, obtain and record conservation-domain review of:
 
 - the 402 DOC036-derived relations;
-- the regenerated 48-fact Wiki;
+- the regenerated Wiki with 27 summary statements and 36 additional key facts;
 - representative DOC036 answers and citations; and
 - the language used to disclose research-prototype limitations.
 

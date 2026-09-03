@@ -169,7 +169,7 @@ The current wiki contains 15 pages distributed across:
 - threats; and
 - agencies.
 
-Pages lead with an extractive Summary containing the strongest one or two retained evidence statements and their citations. Mention and document counts appear separately under Corpus coverage. Pages also include cited facts, supporting evidence, related documents, related entities, and open questions where applicable. Citation and link validators check each generated page, including the required coverage section. The regenerated variant Wiki has 48/48 facts traceable to stored evidence and 83/83 internal links resolving; its historical manual audit predates DOC036.
+Pages lead with an extractive Summary containing the strongest one or two retained evidence statements and their citations. Mention and document counts appear separately under Corpus coverage. Key facts contains only subsequent retained statements and is omitted when no additional evidence remains. Pages also include supporting evidence, related documents, related entities, and open questions where applicable. Citation and link validators reject Summary/Key facts duplication and check each generated page. The regenerated variant Wiki has 27/27 cited summary statements and 36/36 additional key facts traceable to stored evidence, with 83/83 internal links resolving; its historical manual audit predates DOC036.
 
 ### 4.8 Chatbot retrieval and answer control
 
@@ -329,7 +329,7 @@ Community Cloud can hibernate after inactivity. A restart loses browser session 
 | Organized public conservation corpus | `data/metadata.csv` and 36 document records, including DOC036 provenance |
 | Searchable documents | SQLite FTS5 and FAISS over 982 page-aware chunks |
 | Structured entities and relations | 9,612 mentions, 1,389 evidence-linked relations, five required relation types |
-| Evidence-backed wiki | Two-level navigation over 15 Markdown pages with cited entity summaries separated from corpus coverage, 48 validated facts, and 83 valid links |
+| Evidence-backed wiki | Two-level navigation over 15 Markdown pages with 27 cited summary statements, 36 additional nonduplicated key facts, separate corpus coverage, and 83 valid links |
 | Cited chatbot | Direct claim-derived answer first, key supporting findings, cited supporting-document list, detailed evidence, and deterministic validation |
 | Evaluation questions and rubric | `outputs/demo_answers.md`, correctness audits, holdouts, and `outputs/requirements_evaluation.md` |
 | Deployable interface | Five-tab `app.py`, pinned dependencies, persisted artifacts, Streamlit deployment guide |

@@ -3,7 +3,7 @@ title: "Disease"
 entity_type: threat
 mentions: 149
 documents: 20
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,8 +22,6 @@ Corpus extraction recorded 149 mentions of **Disease** across 20 public document
 
 ## Key facts
 
-- There are several insects and diseases that are of particular concern in Missouri. [DOC001, pp. 83-85]
-- Diseases In addition to invasive and aggressive plant issues, the natural communities of Mis souri are vulnerable to several invasive insects and disea ses not native to the state. [DOC036, pp. 90-91]
 - Help stop the spread of invasive species and disease by improving ship ballast control practices. [DOC013, pp. 126-128]
 - Seventeen states reported 37 recreational water outbreaks caused by microorganisms in the latest (1995- 1996) available data from the Centers for Disease Control. [DOC031, pp. 1-5]
 

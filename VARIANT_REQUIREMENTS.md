@@ -55,8 +55,8 @@ The variant may be accepted only after all of the following are recorded:
 - the independently rebuilt knowledge layer contains referentially sound
   entities and relations and all 15 generated Wiki pages validate;
 - Streamlit and Wiki tests confirm entity-type/entity navigation, cited entity
-  information in Summary, separately labelled Corpus coverage, and no raw front
-  matter in rendered content;
+  information in Summary, separately labelled Corpus coverage, optional Key facts
+  containing only additional evidence, and no raw front matter in rendered content;
 - chatbot presentation tests confirm an `Answer` section appears before
   `Key supporting findings`, that the supporting-document list is derived only
   from cited evidence, and that explicit abstention behavior is unchanged;
@@ -78,7 +78,8 @@ The variant may be accepted only after all of the following are recorded:
 
 Corpus ingestion, SQLite/FTS, entity/relation extraction, Wiki regeneration,
 two-level Wiki presentation, hidden front matter, cited entity summaries separated
-from corpus coverage, answer-first chatbot presentation, and the 982-vector FAISS
+from corpus coverage and nonduplicated additional key facts, answer-first chatbot
+presentation, and the 982-vector FAISS
 rebuild are implemented. The full suite passes 145 tests.
 The project validator passes all structural gates and reports only the frozen
 failed holdout gate. All three live variant development questions passed the

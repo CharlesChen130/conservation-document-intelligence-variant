@@ -3,7 +3,7 @@ title: "Missouri Department of Conservation"
 entity_type: agency
 mentions: 265
 documents: 12
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,10 +22,10 @@ Corpus extraction recorded 265 mentions of **Missouri Department of Conservation
 
 ## Key facts
 
-- Missouri Department of Conservation (the Department) policy is to maintain a 20-acre buffer of vegetative cover around any cave or sinkhole opening to protect water quality within caves. [DOC001, pp. 126-129]
-- MDC has an active research program a nd a Science Branch dedicated to filling high-priority research, survey, and inventory nee ds for management of Missouri’s fish, forest, and wildlife resources. [DOC036, pp. 184-185]
 - MDC K-9 Unit in 2021, the dogs and their handlers have provided 496 programs, reaching a total of 27,211 people, and have been involved in 271 deployments. [DOC017]
 - MDC is part of a productive network of federal and state agencies called the Missouri Feral Hog Elimination Partnership (Partnership). [DOC015, pp. 3-5]
+- Fish and Wildlife Service, and MDC have conducted surveys for survival estimation across the release area monthly since November 2020. [DOC018]
+- MDC will strategically coordinate wetland conservation with partners using the Comprehensive Conservation Strategy (CCS) framework. [DOC002, pp. 16-20]
 
 ## Related documents
 

@@ -3,7 +3,7 @@ title: "Climate change"
 entity_type: threat
 mentions: 151
 documents: 15
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,8 +22,6 @@ Corpus extraction recorded 151 mentions of **Climate change** across 15 public d
 
 ## Key facts
 
-- Over the last several years Clevelanders have experienced an increase in average annual temperature, precipitation, and frequency and intensity of severe storms. [DOC033, pp. 71-74]
-- Changing climate patterns including extreme rain events are also altering hydrologic cycles. [DOC036, pp. 287-289]
 - An informed population is essential in addressing and adapting to climate change. [DOC034, pp. 120-122]
 
 ## Related documents

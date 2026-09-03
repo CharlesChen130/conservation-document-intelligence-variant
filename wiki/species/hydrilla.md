@@ -3,7 +3,7 @@ title: "Hydrilla"
 entity_type: species
 mentions: 23
 documents: 5
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -18,9 +18,6 @@ Invasive plants are among priority species, and Hydrilla verticillata (hydrilla)
 
 Corpus extraction recorded 23 mentions of **Hydrilla** across 5 public documents. This page retains 1 ranked evidence snippet.
 
-## Key facts
-
-- Invasive plants are among priority species, and Hydrilla verticillata (hydrilla) topped the list. [DOC005, pp. 13-14]
 
 ## Related documents
 

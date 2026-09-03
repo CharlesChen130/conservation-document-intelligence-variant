@@ -3,7 +3,7 @@ title: "Bighead carp"
 entity_type: species
 mentions: 23
 documents: 6
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -18,9 +18,6 @@ Between the ongoing efforts to control sea lamprey in the Great Lakes to the dec
 
 Corpus extraction recorded 23 mentions of **Bighead carp** across 6 public documents. This page retains 1 ranked evidence snippet.
 
-## Key facts
-
-- Between the ongoing efforts to control sea lamprey in the Great Lakes to the decades -long fight against invasive silver and bighead carp, recreational and commercial fishers and boaters have a deep and challenging history with AIS. [DOC009, pp. 1-3]
 
 ## Related documents
 

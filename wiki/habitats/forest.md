@@ -3,7 +3,7 @@ title: "Forest"
 entity_type: habitat
 mentions: 512
 documents: 26
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,10 +22,10 @@ Corpus extraction recorded 512 mentions of **Forest** across 26 public documents
 
 ## Key facts
 
-- Products In a nutshell: Missouri’s forest products industry is an important contributor to Missouri’s economy and supports diverse economic, social, and environmental values. [DOC036, pp. 154-157]
-- About 85% of the nation’s critical wetlands are in the Western Boreal Forest (WBF), and roughly 40% of North America’s waterfowl breed here. [DOC014, pp. 28-31]
 - Forests cover much of the undeveloped land in the Upper Peninsula and northern Lower Peninsula, while grasslands and other open lands are more common in southern Michigan. [DOC013, pp. 123-126]
 - Canada's northland is a vast and diverse region, containing some of our largest river systems, extensive forested areas, open tundra and unspoiled wilderness. [DOC034, pp. 103-106]
+- Provide a wide variety of wetland habitats throughout Missouri, including wet prairies and bottomland hardwood forests, among others. [DOC001, pp. 147-150]
+- Forests Bottomland Forests True bottomland forests occur on rich, deep soils in low places that are seasonally wet. [DOC025]
 
 ## Related documents
 

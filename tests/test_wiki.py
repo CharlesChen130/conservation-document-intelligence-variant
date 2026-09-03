@@ -159,6 +159,7 @@ def test_generate_evidence_backed_wiki_page(tmp_path):
     )[0]
     assert "Wetlands provide habitat and improve water quality." in summary
     assert "The corpus contains" not in summary
+    assert "## Key facts" not in wetland_page.content
     assert "## Corpus coverage" in wetland_page.content
     assert (
         "Corpus extraction recorded 3 mentions of **Wetland** across 1 public document."

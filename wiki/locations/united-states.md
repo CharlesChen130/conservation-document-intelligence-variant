@@ -3,7 +3,7 @@ title: "United States"
 entity_type: location
 mentions: 292
 documents: 35
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,10 +22,10 @@ Corpus extraction recorded 292 mentions of **United States** across 35 public do
 
 ## Key facts
 
-- In the United States, the Plan has become a network led by the joint ventures to connect diverse programs aimed at migratory bird and habitat conservation on public and private lands. [DOC003, pp. 40-42]
-- United States and Mexico, Canada will also explore ways to strengthen co-operation on continental environmental issues such as long-range transboundary air pollution, toxic chemicals and migratory birds and mammals. [DOC034, pp. 142-147]
 - Mining in the western United States has contaminated stream reaches in the headwaters of more than 40 percent of the watersheds in the West. [DOC031, pp. 12-14]
 - United States and around the world are in decline, and many of Missouri’s wild bee species may be imperiled more than we realize. [DOC036, pp. 334-335]
+- United States is a partnership between the states and the federal government. [DOC013, pp. 6-8]
+- United States has been drained, degraded, or converted to alternative uses. [DOC021]
 
 ## Related documents
 

@@ -151,12 +151,12 @@ The Wiki tab contains 15 generated pages across species, habitats, locations, th
 3. Choose an **Entity** within that type.
 4. Read the entity-focused summary and its citations.
 5. Treat **Corpus coverage** as metadata about mentions and documents, not as the entity summary.
-6. Review the cited key facts, related documents, and related entities.
+6. When present, review the additional cited key facts, related documents, and related entities.
 7. Follow related-page links when available and use citations to verify the source evidence.
 
-Wiki pages are generated from stored corpus evidence. Each Summary presents the strongest one or two retained evidence statements with citations, while Corpus coverage separately reports mention and document counts. Build metadata is used for navigation and is intentionally hidden from page content. These are extractive corpus summaries, not general encyclopedia articles, and they should not be assumed to cover information outside the 36-source corpus.
+Wiki pages are generated from stored corpus evidence. Each Summary presents the strongest one or two retained evidence statements with citations, while Corpus coverage separately reports mention and document counts. **Key facts** contains only additional retained statements and is omitted when none remain, preventing repetition of the Summary. Build metadata is used for navigation and is intentionally hidden from page content. These are extractive corpus summaries, not general encyclopedia articles, and they should not be assumed to cover information outside the 36-source corpus.
 
-Some pages contain only one high-quality fact. This is intentional; the generator does not add weaker text merely to make every page longer.
+Four pages currently omit **Key facts** because all retained high-quality evidence is already displayed in the Summary. This is intentional; the generator neither repeats the Summary nor adds weaker text merely to make every page longer.
 
 ## 8. Using the Chatbot tab
 

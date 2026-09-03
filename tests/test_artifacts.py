@@ -118,12 +118,15 @@ def test_wiki_facts_and_internal_links_are_traceable() -> None:
         facts_match = re.search(
             r"(?ms)^## Key facts\s*$\n(.*?)(?=^##\s)", content
         )
-        assert facts_match
-        facts = [
-            line.removeprefix("- ").strip()
-            for line in facts_match.group(1).splitlines()
-            if line.startswith("- ")
-        ]
+        facts = (
+            [
+                line.removeprefix("- ").strip()
+                for line in facts_match.group(1).splitlines()
+                if line.startswith("- ")
+            ]
+            if facts_match
+            else []
+        )
         for fact in facts:
             citation_match = FACT_CITATION_RE.search(fact)
             assert citation_match

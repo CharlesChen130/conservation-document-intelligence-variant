@@ -3,7 +3,7 @@ title: "Invasive carp"
 entity_type: species
 mentions: 61
 documents: 12
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -18,9 +18,6 @@ Early detection and surveillance.—There are critical needs for invasive carp r
 
 Corpus extraction recorded 61 mentions of **Invasive carp** across 12 public documents. This page retains 1 ranked evidence snippet.
 
-## Key facts
-
-- Early detection and surveillance.—There are critical needs for invasive carp research focused on early detection of carp invasion and on carp reproductive success in new areas. [DOC012, pp. 22-24]
 
 ## Related documents
 

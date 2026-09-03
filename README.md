@@ -22,7 +22,7 @@ The PI-requested corpus, Wiki, and chatbot changes are implemented. The separate
 - 36/36 catalog sources acquired and extracted, including the PI-supplied `DOC036`
 - 982 deterministic, page-aware chunks in SQLite/FTS5
 - 9,612 entity mentions and 1,389 evidence-linked relations
-- 15 validated wiki pages across species, habitats, locations, threats, and agencies; each separates an entity-focused cited summary from corpus-coverage metadata, 48/48 facts trace to stored evidence, and 83/83 internal links resolve
+- 15 validated wiki pages across species, habitats, locations, threats, and agencies; 27/27 cited summary statements and 36/36 additional, nonduplicated key facts trace to stored evidence, and 83/83 internal links resolve
 - five working Streamlit tabs: Corpus, Search, Wiki, Chatbot, and Evaluation
 - a current 982-vector, 1,536-dimensional FAISS semantic index
 - 145 automated tests passing
@@ -32,7 +32,7 @@ The PI-requested corpus, Wiki, and chatbot changes are implemented. The separate
 - a completed five-answer manual citation audit and document-rubric report
 - full official-answer audit: 10 PASS, 0 PARTIAL, 0 FAIL
 - inherited relation-quality audit: 987/987 baseline integrity checks and 37/37 manually reviewed baseline rows passing; the 402 DOC036 relations still require variant review
-- inherited wiki-quality audit: 15/15 baseline pages and 44/44 baseline facts passing; the regenerated 48-fact variant Wiki passes automated traceability checks and still requires variant manual review
+- inherited wiki-quality audit: 15/15 baseline pages and 44/44 baseline facts passing; the regenerated variant Wiki has 63 nonduplicated cited statements and passes automated traceability checks but still requires variant manual review
 - post-repair H, F, and G 20-question regression sets: 16/16 supported answers and 4/4 intended abstentions on each set
 - provisional document-rubric self-score: 95/100 (internal deployment threshold: 90/100)
 
@@ -147,7 +147,7 @@ The official-answer, relation-quality, wiki-quality, and known-set chatbot regre
 ## Limitations
 
 - The rule-based entity layer favors auditability over exhaustive recall and has not received domain-expert validation.
-- Wiki summaries are extractive: they show the strongest one or two cited retained evidence statements rather than uncited general encyclopedia text. Four pages retain one publishable fact rather than padding them with noisy fragments; repeated co-mentions are explicitly labelled as non-semantic corpus associations.
+- Wiki summaries are extractive: they show the strongest one or two cited retained evidence statements rather than uncited general encyclopedia text. Four pages omit **Key facts** because no additional retained statements remain after the Summary; repeated co-mentions are explicitly labelled as non-semantic corpus associations.
 - The saved live evaluation is a self-evaluation, not an independent domain-expert assessment; the five-answer citation audit is recorded in `outputs/manual_citation_audit.md`.
 - The inherited J holdout failed because unseen answerable paraphrases could trigger false abstentions or semantically adjacent answers; its immutable audit remains historical baseline evidence.
 - The DOC036-centered variant holdout also failed its strict gate at 12 PASS, 5 PARTIAL, and 3 FAIL. Its immutable first-run record is in `outputs/variant_holdout_v1_first_run_audit.md`.

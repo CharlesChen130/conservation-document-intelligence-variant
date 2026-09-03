@@ -3,7 +3,7 @@ title: "Marsh"
 entity_type: habitat
 mentions: 97
 documents: 17
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -20,10 +20,6 @@ Emergent marsh wetlands are characterized by herbaceous vegetation growing in so
 
 Corpus extraction recorded 97 mentions of **Marsh** across 17 public documents. This page retains 2 ranked evidence snippets.
 
-## Key facts
-
-- Emergent marsh wetlands are characterized by herbaceous vegetation growing in soils that are semi-permanently inundated. [DOC036, pp. 288-292]
-- Emergent marsh wetlands are characterized by herbaceous vegetation growing in soils that are seasonally inundated. [DOC001, pp. 149-153]
 
 ## Related documents
 

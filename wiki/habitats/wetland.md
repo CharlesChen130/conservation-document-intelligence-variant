@@ -3,7 +3,7 @@ title: "Wetland"
 entity_type: habitat
 mentions: 385
 documents: 30
-generated_at: 2026-09-03T19:56:01.313099+00:00
+generated_at: 2026-09-03T20:11:52.499196+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -22,10 +22,10 @@ Corpus extraction recorded 385 mentions of **Wetland** across 30 public document
 
 ## Key facts
 
-- Wetlands of International Importance especially as Waterfowl Habitat is agreed by representatives of 18 nations meeting in the Iranian town of Ramsar, and signed the following day. [DOC027, pp. 24-26]
-- Wetlands are natural communities resulting from saturation by surface or groundwater, which create hydric soil conditions favoring the development of hydrophytic vegetation. [DOC001, pp. 137-140]
 - Wetlands are natural communities resulting from saturation by surface or groundwa ter that create hydric soil conditions favoring the development of hydrophytic vegetation. [DOC036, pp. 278-280]
 - Fish and Wildlife Service is the principal federal agency tasked with providing information to the public on the extent and status of the nation’s wetland and deepwater habitats, as well as changes to these habitats over time. [DOC022]
+- Wetlands are a transition zone between land and aquatic environments, and they protect the quality of both. [DOC025]
+- Wetlands in New York are incredibly diverse and contain examples of every major wetland class in both fresh and saltwater. [DOC013, pp. 167-169]
 
 ## Related documents
 

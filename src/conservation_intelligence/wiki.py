@@ -569,6 +569,8 @@ def render_page(
     page_index: dict[tuple[str, str], str],
 ) -> WikiPage:
     evidence_rows = _entity_evidence(connection, name, entity_type)
+    summary_rows = evidence_rows[:2]
+    fact_rows = evidence_rows[2:6]
     mention_label = "mention" if mentions == 1 else "mentions"
     document_label = "document" if document_count == 1 else "documents"
     evidence_snippet_label = "snippet" if len(evidence_rows) == 1 else "snippets"
@@ -597,7 +599,7 @@ def render_page(
         "## Summary",
         "",
     ]
-    for row in evidence_rows[:2]:
+    for row in summary_rows:
         lines.extend(
             [
                 (
@@ -625,17 +627,15 @@ def render_page(
                 f"{len(evidence_rows)} ranked evidence {evidence_snippet_label}."
             ),
             "",
-            "## Key facts",
-            "",
         ]
     )
-    for row in evidence_rows[:4]:
-        lines.append(
-            f"- {clean_wiki_evidence(row['evidence'], name)} "
-            f"{citation(row['doc_id'], row['page'])}"
-        )
-    if not evidence_rows:
-        lines.append("- No supporting evidence was retained; this page requires review.")
+    if fact_rows:
+        lines.extend(["## Key facts", ""])
+        for row in fact_rows:
+            lines.append(
+                f"- {clean_wiki_evidence(row['evidence'], name)} "
+                f"{citation(row['doc_id'], row['page'])}"
+            )
 
     lines.extend(["", "## Related documents", ""])
     seen_documents: set[str] = set()
@@ -818,7 +818,6 @@ def validate_wiki_page(content: str) -> list[str]:
     sections = (
         "## Summary",
         "## Corpus coverage",
-        "## Key facts",
         "## Related documents",
         "## Related entities",
         "## Evidence snippets",
@@ -847,9 +846,15 @@ def validate_wiki_page(content: str) -> list[str]:
     if not CITATION_PATTERN.search(summary):
         errors.append("summary contains no corpus citation")
 
+    facts_section_present = bool(re.search(r"(?m)^## Key facts\s*$", content))
     facts = _section_bullets(content, "## Key facts")
-    if not facts:
+    if facts_section_present and not facts:
         errors.append("key facts contains no bullet items")
+    normalized_summary = {
+        CITATION_PATTERN.sub("", " ".join(statement.split())).casefold().strip(" .")
+        for statement in re.split(r"\n\s*\n", summary)
+        if statement.strip()
+    }
     normalized_facts: set[str] = set()
     for fact in facts:
         if not CITATION_PATTERN.search(fact):
@@ -869,6 +874,8 @@ def validate_wiki_page(content: str) -> list[str]:
         if len(fact) > 700:
             errors.append(f"overlong key fact: {fact[:80]}")
         normalized = CITATION_PATTERN.sub("", fact).casefold().strip(" .")
+        if normalized in normalized_summary:
+            errors.append(f"key fact duplicates summary: {fact[:80]}")
         if normalized in normalized_facts:
             errors.append(f"duplicate key fact: {fact[:80]}")
         normalized_facts.add(normalized)
