@@ -3,7 +3,7 @@ title: "Climate change"
 entity_type: threat
 mentions: 151
 documents: 15
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 151 extracted mentions of **Climate change** across 15 public documents. [DOC033, pp. 71-74] [DOC036, pp. 287-289] [DOC034, pp. 120-122]
+Over the last several years Clevelanders have experienced an increase in average annual temperature, precipitation, and frequency and intensity of severe storms. [DOC033, pp. 71-74]
+
+Changing climate patterns including extreme rain events are also altering hydrologic cycles. [DOC036, pp. 287-289]
+
+## Corpus coverage
+
+Corpus extraction recorded 151 mentions of **Climate change** across 15 public documents. This page retains 3 ranked evidence snippets.
 
 ## Key facts
 

@@ -5,8 +5,9 @@
 This repository is the independent CDIP variant. It inherits the validated
 prototype baseline at commit `ac698b715c55f42779c36182b85f193f3cd7c7ed` and
 uses Streamlit Community Cloud rather than Hugging Face Spaces. The PI email
-requirements below govern this extension; inherited evaluation artifacts remain
-historical baseline evidence unless they are explicitly rerun for this variant.
+and subsequent approved meeting feedback below govern this extension; inherited
+evaluation artifacts remain historical baseline evidence unless they are explicitly
+rerun for this variant.
 
 Variant data, derived artifacts, evaluation, deployment, secrets, and rollback
 remain inside this repository and its separate GitHub and Streamlit resources.
@@ -18,6 +19,10 @@ remain inside this repository and its separate GitHub and Streamlit resources.
 3. Do not expose generated Markdown/YAML metadata as page content.
 4. Keep the chatbot's supporting-document list and add a query-focused core
    findings summary.
+5. Replace count-only Wiki summaries with cited information about the selected
+   entity; display mention and document counts separately as corpus coverage.
+6. In the Chatbot, present a concise direct answer before the point-by-point
+   supporting findings, without weakening citations, validation, or abstention.
 
 ## Corpus addition and provenance
 
@@ -49,11 +54,12 @@ The variant may be accepted only after all of the following are recorded:
   chunks for `DOC036`, and distinctive DOC036 queries retrieve it;
 - the independently rebuilt knowledge layer contains referentially sound
   entities and relations and all 15 generated Wiki pages validate;
-- Streamlit tests confirm entity-type/entity Wiki navigation and confirm that
-  raw front matter is absent from rendered content;
-- chatbot presentation tests confirm a `Core findings` section, a supporting
-  document list derived only from cited evidence, and unchanged explicit
-  abstention behavior;
+- Streamlit and Wiki tests confirm entity-type/entity navigation, cited entity
+  information in Summary, separately labelled Corpus coverage, and no raw front
+  matter in rendered content;
+- chatbot presentation tests confirm an `Answer` section appears before
+  `Key supporting findings`, that the supporting-document list is derived only
+  from cited evidence, and that explicit abstention behavior is unchanged;
 - inherited official/demo and engineering regressions are rerun after the
   corpus change, while their historical results remain distinguishable from
   the new variant run;
@@ -71,9 +77,10 @@ The variant may be accepted only after all of the following are recorded:
 ## Current acceptance status
 
 Corpus ingestion, SQLite/FTS, entity/relation extraction, Wiki regeneration,
-two-level Wiki presentation, hidden front matter, chatbot presentation, and
-the 982-vector FAISS rebuild are implemented. The full suite passes 145 tests.
-The project validator passes all structural gates and reports only the inherited
+two-level Wiki presentation, hidden front matter, cited entity summaries separated
+from corpus coverage, answer-first chatbot presentation, and the 982-vector FAISS
+rebuild are implemented. The full suite passes 145 tests.
+The project validator passes all structural gates and reports only the frozen
 failed holdout gate. All three live variant development questions passed the
 grounding and presentation smoke review recorded in
 `outputs/variant_acceptance_smoke.md`.

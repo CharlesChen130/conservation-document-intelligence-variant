@@ -3,7 +3,7 @@ title: "Wetland"
 entity_type: habitat
 mentions: 385
 documents: 30
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 385 extracted mentions of **Wetland** across 30 public documents. [DOC027, pp. 24-26] [DOC001, pp. 137-140] [DOC036, pp. 278-280]
+Wetlands of International Importance especially as Waterfowl Habitat is agreed by representatives of 18 nations meeting in the Iranian town of Ramsar, and signed the following day. [DOC027, pp. 24-26]
+
+Wetlands are natural communities resulting from saturation by surface or groundwater, which create hydric soil conditions favoring the development of hydrophytic vegetation. [DOC001, pp. 137-140]
+
+## Corpus coverage
+
+Corpus extraction recorded 385 mentions of **Wetland** across 30 public documents. This page retains 6 ranked evidence snippets.
 
 ## Key facts
 

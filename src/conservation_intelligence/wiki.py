@@ -569,14 +569,14 @@ def render_page(
     page_index: dict[tuple[str, str], str],
 ) -> WikiPage:
     evidence_rows = _entity_evidence(connection, name, entity_type)
+    mention_label = "mention" if mentions == 1 else "mentions"
+    document_label = "document" if document_count == 1 else "documents"
+    evidence_snippet_label = "snippet" if len(evidence_rows) == 1 else "snippets"
     corpus_count = connection.execute(
         "SELECT COUNT(*) FROM documents"
     ).fetchone()[0]
     semantic_related_rows = _semantic_related_entities(connection, name)
     co_mentioned_rows = _co_mentioned_entities(connection, name, entity_type)
-    citations = " ".join(
-        citation(row["doc_id"], row["page"]) for row in evidence_rows[:3]
-    )
     page_slug = slugify(name)
     relative_path = Path("wiki") / category / f"{page_slug}.md"
     page_id = f"wiki-{category}-{page_slug}"
@@ -596,14 +596,39 @@ def render_page(
         "",
         "## Summary",
         "",
-        (
-            f"The corpus contains {mentions} extracted mentions of **{name}** across "
-            f"{document_count} public documents. {citations}"
-        ),
-        "",
-        "## Key facts",
-        "",
     ]
+    for row in evidence_rows[:2]:
+        lines.extend(
+            [
+                (
+                    f"{clean_wiki_evidence(row['evidence'], name)} "
+                    f"{citation(row['doc_id'], row['page'])}"
+                ),
+                "",
+            ]
+        )
+    if not evidence_rows:
+        lines.extend(
+            [
+                "No supporting evidence was retained; this page requires review.",
+                "",
+            ]
+        )
+
+    lines.extend(
+        [
+            "## Corpus coverage",
+            "",
+            (
+                f"Corpus extraction recorded {mentions} {mention_label} of **{name}** across "
+                f"{document_count} public {document_label}. This page retains "
+                f"{len(evidence_rows)} ranked evidence {evidence_snippet_label}."
+            ),
+            "",
+            "## Key facts",
+            "",
+        ]
+    )
     for row in evidence_rows[:4]:
         lines.append(
             f"- {clean_wiki_evidence(row['evidence'], name)} "
@@ -792,6 +817,7 @@ def validate_wiki_page(content: str) -> list[str]:
     errors: list[str] = []
     sections = (
         "## Summary",
+        "## Corpus coverage",
         "## Key facts",
         "## Related documents",
         "## Related entities",

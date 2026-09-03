@@ -3,7 +3,7 @@ title: "Missouri Department of Conservation"
 entity_type: agency
 mentions: 265
 documents: 12
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 265 extracted mentions of **Missouri Department of Conservation** across 12 public documents. [DOC001, pp. 126-129] [DOC036, pp. 184-185] [DOC017]
+Missouri Department of Conservation (the Department) policy is to maintain a 20-acre buffer of vegetative cover around any cave or sinkhole opening to protect water quality within caves. [DOC001, pp. 126-129]
+
+MDC has an active research program a nd a Science Branch dedicated to filling high-priority research, survey, and inventory nee ds for management of Missouri’s fish, forest, and wildlife resources. [DOC036, pp. 184-185]
+
+## Corpus coverage
+
+Corpus extraction recorded 265 mentions of **Missouri Department of Conservation** across 12 public documents. This page retains 6 ranked evidence snippets.
 
 ## Key facts
 

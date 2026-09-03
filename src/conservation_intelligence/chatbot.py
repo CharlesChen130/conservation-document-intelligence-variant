@@ -3115,7 +3115,7 @@ def format_chatbot_response(
     answer: str,
     evidence: Sequence[SearchResult],
 ) -> str:
-    """Add a query-focused findings section and retain cited source documents."""
+    """Lead with a claim-derived answer, then retain findings and cited documents."""
     normalized = normalize_answer_markdown(answer)
     if normalized == INSUFFICIENT_EVIDENCE_MESSAGE:
         return normalized
@@ -3128,8 +3128,32 @@ def format_chatbot_response(
             normalized = normalized[len(preamble) :].lstrip()
             break
 
-    if not normalized.startswith("### Core findings"):
-        normalized = f"### Core findings\n\n{normalized}"
+    already_answer_first = (
+        normalized.startswith("### Answer")
+        and "### Key supporting findings" in normalized
+    )
+    if not already_answer_first:
+        if not normalized.startswith("### Core findings"):
+            normalized = f"### Core findings\n\n{normalized}"
+
+        findings_match = re.search(
+            r"(?ms)^### Core findings\s*\n(?P<body>.*?)(?=^### |\Z)",
+            normalized,
+        )
+        findings_body = findings_match.group("body").strip() if findings_match else ""
+        answer_units = [
+            re.sub(r"^(?:[-*]|\d+[.)])\s+", "", unit).strip()
+            for unit in _factual_units(findings_body)
+            if FULL_CITATION_PATTERN.search(unit)
+        ]
+        direct_answer = " ".join(unit for unit in answer_units if unit)
+        normalized = normalized.replace(
+            "### Core findings",
+            "### Key supporting findings",
+            1,
+        )
+        if direct_answer:
+            normalized = f"### Answer\n\n{direct_answer}\n\n{normalized}"
 
     if "### Supporting documents" in normalized:
         return normalized
@@ -3148,7 +3172,7 @@ def format_chatbot_response(
     if supporting_lines:
         normalized += (
             "\n\n### Supporting documents\n\n"
-            "*Sources cited directly in the core findings.*\n\n"
+            "Sources cited directly in the Answer and key supporting findings:\n\n"
             + "\n".join(supporting_lines)
         )
     return normalize_answer_markdown(normalized)

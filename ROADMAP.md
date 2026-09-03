@@ -15,8 +15,8 @@ The inherited prototype roadmap is complete historical context. This roadmap rec
 | Variant runtime corpus | Complete | 36 documents and 982 page-aware chunks |
 | Semantic index | Complete | 982 vectors, 1,536 dimensions, current manifest |
 | Entity and relation layer | Automated checks complete | 9,612 mentions and 1,389 relations; manual DOC036 review remains |
-| Two-level Wiki | Implemented | 15 pages, 48 traceable facts, 83 resolving links; manual variant review remains |
-| Chatbot presentation | Implemented | Core findings, cited supporting-document list, evidence expander, and abstention |
+| Two-level Wiki | Implemented | 15 pages with cited entity summaries separated from corpus coverage, 48 traceable facts, and 83 resolving links; manual variant review remains |
+| Chatbot presentation | Implemented | Direct answer first, key supporting findings, cited supporting-document list, all-evidence expander, and abstention |
 | Automated verification | Complete | 145 tests passing |
 | Variant development smoke | Complete | Three live development questions passed the recorded smoke audit |
 | DOC036-centered holdout V1 | Complete, strict gate failed | 12 PASS, 5 PARTIAL, 3 FAIL; immutable first-run audit retained |
@@ -44,6 +44,8 @@ Strict acceptance remains blocked because:
 - [x] Hide generated YAML/front-matter fields from the rendered Wiki.
 - [x] Retain the chatbot's supporting-document list.
 - [x] Add a query-focused **Core findings** summary.
+- [x] Replace count-only Wiki summaries with cited entity information and move mention/document statistics to **Corpus coverage**.
+- [x] Present a direct **Answer** before renamed **Key supporting findings**, while deriving both from the same validated claims.
 - [x] Freeze, execute exactly once, and manually audit a 20-question DOC036-centered holdout.
 - [x] Preserve document/page citations, claim validation, and explicit abstention.
 
@@ -88,7 +90,7 @@ Do not rename the feature branch over `main`, force-push, change the remote, or 
 
 ### 5. Run the cloud smoke test — pending
 
-Verify the 36-document/982-chunk counts, DOC036 retrieval, semantic search, two-level Wiki navigation, hidden front matter, chatbot core findings and citations, correct abstention, official Evaluation UI scope, reboot behavior, and isolation from the earlier CDIP app.
+Verify the 36-document/982-chunk counts, DOC036 retrieval, semantic search, two-level Wiki navigation, cited entity summaries separated from corpus coverage, hidden front matter, answer-first chatbot output and citations, correct abstention, official Evaluation UI scope, reboot behavior, and isolation from the earlier CDIP app.
 
 Record the deployed commit, app URL, visibility, smoke result, and rollback commit in the handoff record in `DEPLOYMENT.md`.
 

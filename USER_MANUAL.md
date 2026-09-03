@@ -52,8 +52,8 @@ The application contains five tabs:
 |---|---|
 | Corpus | Browse the 36 sources, filter metadata, and open original documents |
 | Search | Retrieve page-aware evidence using keyword or semantic search |
-| Wiki | Choose an entity type, then an entity, and read its cited page |
-| Chatbot | Read core findings, supporting documents, and detailed retrieved evidence |
+| Wiki | Choose an entity type, then an entity, and read its cited summary, coverage, facts, and sources |
+| Chatbot | Read the direct answer first, then key supporting findings, supporting documents, and all retrieved evidence |
 | Evaluation | Review system counts and the 10 official requirement questions and saved answers |
 
 A research-prototype warning remains visible at the top of the application.
@@ -149,11 +149,12 @@ The Wiki tab contains 15 generated pages across species, habitats, locations, th
 1. Open **Wiki**.
 2. Choose an **Entity type** such as Species, Habitats, Locations, Threats, or Agencies.
 3. Choose an **Entity** within that type.
-4. Read the summary and cited facts.
-5. Follow related-page links when available.
-6. Use the citations to verify the supporting source evidence.
+4. Read the entity-focused summary and its citations.
+5. Treat **Corpus coverage** as metadata about mentions and documents, not as the entity summary.
+6. Review the cited key facts, related documents, and related entities.
+7. Follow related-page links when available and use citations to verify the source evidence.
 
-Wiki pages are generated from stored corpus evidence. Their build metadata is used for navigation and is intentionally hidden from page content. They are not general encyclopedia articles and should not be assumed to cover information outside the 36-source corpus.
+Wiki pages are generated from stored corpus evidence. Each Summary presents the strongest one or two retained evidence statements with citations, while Corpus coverage separately reports mention and document counts. Build metadata is used for navigation and is intentionally hidden from page content. These are extractive corpus summaries, not general encyclopedia articles, and they should not be assumed to cover information outside the 36-source corpus.
 
 Some pages contain only one high-quality fact. This is intentional; the generator does not add weaker text merely to make every page longer.
 
@@ -168,10 +169,11 @@ The chatbot is enabled only when the administrator has configured `OPENAI_API_KE
 1. Open **Chatbot**.
 2. Enter one conservation question in the message field.
 3. Wait while the system retrieves and checks evidence.
-4. Read the query-focused **Core findings** and its cited supporting-document list.
-5. Expand **Retrieved evidence** to inspect the full passages used.
-6. Verify each material claim against the cited source passage.
-7. Open the source link when the answer will be used in research or decision-making.
+4. Read **Answer** first; it directly combines the already validated claims that address the question.
+5. Review **Key supporting findings** for the same claims point by point.
+6. Review **Supporting documents** for the sources cited by those claims.
+7. Expand **All retrieved evidence** to inspect every passage considered, including uncited candidates.
+8. Verify each material claim against the cited source passage and open the source when the answer will be used in research or decision-making.
 
 Questions are limited to 1,000 characters. Each browser session is limited to 20 chatbot questions.
 
@@ -253,7 +255,7 @@ An abstention is not proof that the requested fact is false.
 
 The system can remove unsupported claims and retain supported ones. If an answer appears incomplete:
 
-1. inspect **Retrieved evidence**;
+1. inspect **All retrieved evidence**;
 2. split the question into smaller parts;
 3. run a keyword search for the missing concept; and
 4. report the case during evaluation.
@@ -412,9 +414,9 @@ Confirm the following after first deployment and after material updates:
 - [ ] Keyword search returns page-aware evidence for `invasive carp`.
 - [ ] Semantic search works when the API secret is configured.
 - [ ] All 15 wiki pages render through **Entity type** then **Entity** navigation.
-- [ ] Wiki pages do not display YAML fields such as `generated_at` or `generation_method`.
+- [ ] Wiki summaries contain cited entity information, corpus counts appear separately under **Corpus coverage**, and YAML fields such as `generated_at` remain hidden.
 - [ ] The chatbot answers a supported question with document/page citations.
-- [ ] **Core findings**, the cited supporting-document list, and **Retrieved evidence** agree.
+- [ ] **Answer** appears first and agrees with **Key supporting findings**, **Supporting documents**, and **All retrieved evidence**.
 - [ ] An out-of-corpus question produces an insufficient-evidence response.
 - [ ] Evaluation metrics show 982 chunks, 9,612 entity mentions, 1,389 relations, and 15 wiki pages.
 - [ ] The official 10-question evaluation report displays and downloads without internal engineering or holdout questions.

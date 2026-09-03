@@ -3,7 +3,7 @@ title: "North America"
 entity_type: location
 mentions: 85
 documents: 17
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 85 extracted mentions of **North America** across 17 public documents. [DOC021] [DOC003, pp. 23-26] [DOC034, pp. 111-113]
+More than half of North America's wetlands have been lost or degraded - Ducks Unlimited and our partners are working to reverse that trend. [DOC021]
+
+North America has 43 species of ducks, geese, and swans that typically depend on habitats in two or more countries to complete portions of their life cycles. [DOC003, pp. 23-26]
+
+## Corpus coverage
+
+Corpus extraction recorded 85 mentions of **North America** across 17 public documents. This page retains 6 ranked evidence snippets.
 
 ## Key facts
 

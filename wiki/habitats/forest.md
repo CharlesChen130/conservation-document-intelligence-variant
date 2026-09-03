@@ -3,7 +3,7 @@ title: "Forest"
 entity_type: habitat
 mentions: 512
 documents: 26
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 512 extracted mentions of **Forest** across 26 public documents. [DOC036, pp. 154-157] [DOC014, pp. 28-31] [DOC013, pp. 123-126]
+Products In a nutshell: Missouri’s forest products industry is an important contributor to Missouri’s economy and supports diverse economic, social, and environmental values. [DOC036, pp. 154-157]
+
+About 85% of the nation’s critical wetlands are in the Western Boreal Forest (WBF), and roughly 40% of North America’s waterfowl breed here. [DOC014, pp. 28-31]
+
+## Corpus coverage
+
+Corpus extraction recorded 512 mentions of **Forest** across 26 public documents. This page retains 6 ranked evidence snippets.
 
 ## Key facts
 

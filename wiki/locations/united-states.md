@@ -3,7 +3,7 @@ title: "United States"
 entity_type: location
 mentions: 292
 documents: 35
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 292 extracted mentions of **United States** across 35 public documents. [DOC003, pp. 40-42] [DOC034, pp. 142-147] [DOC031, pp. 12-14]
+In the United States, the Plan has become a network led by the joint ventures to connect diverse programs aimed at migratory bird and habitat conservation on public and private lands. [DOC003, pp. 40-42]
+
+United States and Mexico, Canada will also explore ways to strengthen co-operation on continental environmental issues such as long-range transboundary air pollution, toxic chemicals and migratory birds and mammals. [DOC034, pp. 142-147]
+
+## Corpus coverage
+
+Corpus extraction recorded 292 mentions of **United States** across 35 public documents. This page retains 6 ranked evidence snippets.
 
 ## Key facts
 

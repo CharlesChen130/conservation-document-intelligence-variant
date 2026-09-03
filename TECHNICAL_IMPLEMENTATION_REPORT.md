@@ -12,7 +12,7 @@
 
 ## 1. Executive summary
 
-Conservation Document Intelligence is a reproducible research prototype for exploring 36 public conservation sources. This independent variant adds the PI-supplied 2022 Missouri Comprehensive Conservation Strategy, two-level Wiki navigation, hidden Wiki build metadata, and chatbot core findings while retaining cited supporting documents.
+Conservation Document Intelligence is a reproducible research prototype for exploring 36 public conservation sources. This independent variant adds the PI-supplied 2022 Missouri Comprehensive Conservation Strategy, two-level Wiki navigation, hidden Wiki build metadata, entity-focused cited Wiki summaries, and an answer-first chatbot while retaining key supporting findings and cited supporting documents.
 
 The deployed application reads versioned runtime artifacts. It does not download documents, extract text, or rebuild indexes during normal startup. Corpus browsing, keyword search, wiki browsing, and saved evaluation reports work without an API key. Semantic queries and live chatbot answers require `OPENAI_API_KEY`.
 
@@ -169,7 +169,7 @@ The current wiki contains 15 pages distributed across:
 - threats; and
 - agencies.
 
-Pages include cited facts, supporting evidence, related documents, related entities, and open questions where applicable. Citation and link validators check each generated page. The regenerated variant Wiki has 48/48 facts traceable to stored evidence and 83/83 internal links resolving; its historical manual audit predates DOC036.
+Pages lead with an extractive Summary containing the strongest one or two retained evidence statements and their citations. Mention and document counts appear separately under Corpus coverage. Pages also include cited facts, supporting evidence, related documents, related entities, and open questions where applicable. Citation and link validators check each generated page, including the required coverage section. The regenerated variant Wiki has 48/48 facts traceable to stored evidence and 83/83 internal links resolving; its historical manual audit predates DOC036.
 
 ### 4.8 Chatbot retrieval and answer control
 
@@ -192,6 +192,7 @@ The production chatbot follows a guarded retrieval-augmented generation pipeline
 15. Resolve internal labels to citations such as `[DOC012, p. 5]`.
 16. Run final citation, claim-support, numeric-copying, scope, and formatting checks.
 17. Return an extractive fallback or the explicit insufficient-evidence response if validation cannot establish support.
+18. At presentation time, compose **Answer** only from the validated cited claim units, then show the same units as **Key supporting findings**, followed by cited supporting documents and all retrieved evidence.
 
 The normal supported path uses one query-embedding call and at most one chat-model call. Defaults are `gpt-4.1-mini`, six evidence items, 20 retrieval candidates, and 1,000 output tokens. The UI additionally limits each browser session to 20 chatbot questions.
 
@@ -205,8 +206,8 @@ The interface provides five required tabs:
 |---|---|
 | Corpus | Browse and filter the 36-source catalog and open original sources |
 | Search | Run keyword or semantic retrieval and inspect page-aware snippets |
-| Wiki | Choose an entity type, then an entity; browse 15 pages without exposed YAML front matter |
-| Chatbot | Read core findings, cited supporting documents, and expandable retrieved evidence |
+| Wiki | Choose an entity type, then an entity; read a cited entity summary separately from corpus coverage without exposed YAML front matter |
+| Chatbot | Read a direct answer first, then key supporting findings, cited supporting documents, and expandable all retrieved evidence |
 | Evaluation | Inspect corpus metrics, suggested questions, saved reports, and feedback link |
 
 The app starts in reduced mode without `OPENAI_API_KEY`. Corpus browsing, keyword retrieval, the wiki, and saved evaluation remain available; semantic queries and live chatbot input are disabled or report missing configuration clearly.
@@ -328,8 +329,8 @@ Community Cloud can hibernate after inactivity. A restart loses browser session 
 | Organized public conservation corpus | `data/metadata.csv` and 36 document records, including DOC036 provenance |
 | Searchable documents | SQLite FTS5 and FAISS over 982 page-aware chunks |
 | Structured entities and relations | 9,612 mentions, 1,389 evidence-linked relations, five required relation types |
-| Evidence-backed wiki | Two-level navigation over 15 Markdown pages, 48 validated facts, and 83 valid links |
-| Cited chatbot | Query-focused core findings, cited supporting-document list, detailed evidence, and deterministic validation |
+| Evidence-backed wiki | Two-level navigation over 15 Markdown pages with cited entity summaries separated from corpus coverage, 48 validated facts, and 83 valid links |
+| Cited chatbot | Direct claim-derived answer first, key supporting findings, cited supporting-document list, detailed evidence, and deterministic validation |
 | Evaluation questions and rubric | `outputs/demo_answers.md`, correctness audits, holdouts, and `outputs/requirements_evaluation.md` |
 | Deployable interface | Five-tab `app.py`, pinned dependencies, persisted artifacts, Streamlit deployment guide |
 | Secret protection | `.gitignore`, `.env.example`, and Streamlit Secrets workflow |

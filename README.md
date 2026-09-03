@@ -1,6 +1,6 @@
 # Conservation Document Intelligence
 
-A deployable research prototype that organizes 36 public conservation sources, searches page-aware evidence, extracts conservation entities and relations, presents an evidence-backed two-level wiki, and produces citation-checked chatbot answers with core findings and supporting documents.
+A deployable research prototype that organizes 36 public conservation sources, searches page-aware evidence, extracts conservation entities and relations, presents an evidence-backed two-level wiki, and produces citation-checked chatbot responses with a direct answer, key supporting findings, and supporting documents.
 
 The supplied project description and deployment guide define the inherited prototype. [VARIANT_REQUIREMENTS.md](VARIANT_REQUIREMENTS.md) records the approved PI extension, corpus provenance, independent repository boundary, and variant acceptance gates.
 
@@ -22,7 +22,7 @@ The PI-requested corpus, Wiki, and chatbot changes are implemented. The separate
 - 36/36 catalog sources acquired and extracted, including the PI-supplied `DOC036`
 - 982 deterministic, page-aware chunks in SQLite/FTS5
 - 9,612 entity mentions and 1,389 evidence-linked relations
-- 15 validated wiki pages across species, habitats, locations, threats, and agencies; 48/48 facts trace to stored evidence and 83/83 internal links resolve
+- 15 validated wiki pages across species, habitats, locations, threats, and agencies; each separates an entity-focused cited summary from corpus-coverage metadata, 48/48 facts trace to stored evidence, and 83/83 internal links resolve
 - five working Streamlit tabs: Corpus, Search, Wiki, Chatbot, and Evaluation
 - a current 982-vector, 1,536-dimensional FAISS semantic index
 - 145 automated tests passing
@@ -65,8 +65,8 @@ The versioned `db/conservation.db` is the complete runtime corpus, so the app do
 | Keyword retrieval | SQLite FTS5 with page-aware evidence snippets | Yes |
 | Semantic retrieval | current persisted FAISS index using OpenAI embeddings | Live query/rebuild requires API key |
 | Structured knowledge | rule-based typed entities and five required relation types, each tied to evidence | Yes |
-| Wiki | two-level entity-type/entity navigation over 15 evidence-ranked pages; generated front matter is hidden | Yes |
-| Chatbot | query-focused core findings, cited supporting-document list, evidence expander, citation validation, and abstention | Requires API key |
+| Wiki | two-level entity-type/entity navigation over 15 evidence-ranked pages; cited entity summaries are separated from corpus-coverage metadata and generated front matter is hidden | Yes |
+| Chatbot | direct claim-derived answer first, key supporting findings, cited supporting-document list, all-evidence expander, citation validation, and abstention | Requires API key |
 | Evaluation | 10 official questions in the public UI; 5 engineering checks, known regression sets, and holdouts retained as internal evaluation artifacts | Yes |
 
 ## Rebuild pipeline
@@ -147,7 +147,7 @@ The official-answer, relation-quality, wiki-quality, and known-set chatbot regre
 ## Limitations
 
 - The rule-based entity layer favors auditability over exhaustive recall and has not received domain-expert validation.
-- Four wiki pages retain one publishable fact rather than padding them with noisy extraction fragments; repeated co-mentions are explicitly labelled as non-semantic corpus associations.
+- Wiki summaries are extractive: they show the strongest one or two cited retained evidence statements rather than uncited general encyclopedia text. Four pages retain one publishable fact rather than padding them with noisy fragments; repeated co-mentions are explicitly labelled as non-semantic corpus associations.
 - The saved live evaluation is a self-evaluation, not an independent domain-expert assessment; the five-answer citation audit is recorded in `outputs/manual_citation_audit.md`.
 - The inherited J holdout failed because unseen answerable paraphrases could trigger false abstentions or semantically adjacent answers; its immutable audit remains historical baseline evidence.
 - The DOC036-centered variant holdout also failed its strict gate at 12 PASS, 5 PARTIAL, and 3 FAIL. Its immutable first-run record is in `outputs/variant_holdout_v1_first_run_audit.md`.

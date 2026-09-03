@@ -3,7 +3,7 @@ title: "Invasive species"
 entity_type: threat
 mentions: 260
 documents: 23
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 260 extracted mentions of **Invasive species** across 23 public documents. [DOC017] [DOC006, pp. 13-15] [DOC036, pp. 27-30]
+In the past year, the Invasive Species Program has been reactivated with the placement of the invasive species coordinator position and the reestablishment of the Invasive Species Working Group. [DOC017]
+
+These objectives and corresponding action items are identified in the 2009 USACE Invasive Species Policy and have been refined by the ISLT. [DOC006, pp. 13-15]
+
+## Corpus coverage
+
+Corpus extraction recorded 260 mentions of **Invasive species** across 23 public documents. This page retains 4 ranked evidence snippets.
 
 ## Key facts
 

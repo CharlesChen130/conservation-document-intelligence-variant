@@ -3,7 +3,7 @@ title: "U.S. Fish and Wildlife Service"
 entity_type: agency
 mentions: 186
 documents: 20
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 186 extracted mentions of **U.S. Fish and Wildlife Service** across 20 public documents. [DOC036, pp. 91-93] [DOC009, pp. 1-3] [DOC026]
+USFWS has recommended actions to slow the spread of WNS by having cave managers place a voluntary moratorium on caving in significant bat caves until more is learned about WNS. [DOC036, pp. 91-93]
+
+Coast Gu ard is tasked with enforcing ballast water regulations, the U.S. Fish and Wildlife Service (USFWS) leads eradication efforts and the Departments of Homeland Security and Agriculture oversee biological border controls. [DOC009, pp. 1-3]
+
+## Corpus coverage
+
+Corpus extraction recorded 186 mentions of **U.S. Fish and Wildlife Service** across 20 public documents. This page retains 6 ranked evidence snippets.
 
 ## Key facts
 

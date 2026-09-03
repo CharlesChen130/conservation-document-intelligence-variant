@@ -3,7 +3,7 @@ title: "Disease"
 entity_type: threat
 mentions: 149
 documents: 20
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 149 extracted mentions of **Disease** across 20 public documents. [DOC001, pp. 83-85] [DOC036, pp. 90-91] [DOC013, pp. 126-128]
+There are several insects and diseases that are of particular concern in Missouri. [DOC001, pp. 83-85]
+
+Diseases In addition to invasive and aggressive plant issues, the natural communities of Mis souri are vulnerable to several invasive insects and disea ses not native to the state. [DOC036, pp. 90-91]
+
+## Corpus coverage
+
+Corpus extraction recorded 149 mentions of **Disease** across 20 public documents. This page retains 4 ranked evidence snippets.
 
 ## Key facts
 

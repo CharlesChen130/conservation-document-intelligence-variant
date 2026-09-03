@@ -3,7 +3,7 @@ title: "U.S. Geological Survey"
 entity_type: agency
 mentions: 96
 documents: 14
-generated_at: 2026-08-26T23:16:02.593273+00:00
+generated_at: 2026-09-03T19:56:01.313099+00:00
 generated: true
 generation_method: evidence_ranked
 ---
@@ -12,7 +12,13 @@ generation_method: evidence_ranked
 
 ## Summary
 
-The corpus contains 96 extracted mentions of **U.S. Geological Survey** across 14 public documents. [DOC012, pp. 22-24] [DOC005, pp. 31-33] [DOC031, pp. 9-11]
+USGS will continue to inform managers of invasive carp expansions (for example, as documented by Larson and others, 2017) and provide new tools for early detection and rapid response (for example, Hayer and others, 2020). [DOC012, pp. 22-24]
+
+USGS personnel with, or as members of, these organizations will help to recognize and promote related science needs for AIS management. [DOC005, pp. 31-33]
+
+## Corpus coverage
+
+Corpus extraction recorded 96 mentions of **U.S. Geological Survey** across 14 public documents. This page retains 6 ranked evidence snippets.
 
 ## Key facts
 

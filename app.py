@@ -190,8 +190,9 @@ with chatbot_tab:
     if not api_configured:
         st.warning("OPENAI_API_KEY is not configured; provider-based answering is disabled.")
     st.caption(
-        "Supporting documents are cited directly in Core findings. All retrieved evidence "
-        "includes every passage considered, including passages not cited in the final answer."
+        "The Answer directly summarizes the validated claims. Key supporting findings show "
+        "those claims point by point; the Supporting documents section lists only their cited sources. "
+        "All retrieved evidence includes every passage considered."
     )
     if "chat_messages" not in st.session_state:
         st.session_state.chat_messages = []
@@ -203,7 +204,7 @@ with chatbot_tab:
                 with st.expander("All retrieved evidence"):
                     st.caption(
                         "Passages considered during answer generation; not every passage "
-                        "is cited in Core findings."
+                        "is cited in the Answer or key supporting findings."
                     )
                     for source in message["sources"]:
                         st.markdown(
@@ -256,7 +257,7 @@ with chatbot_tab:
                             with st.expander("All retrieved evidence"):
                                 st.caption(
                                     "Passages considered during answer generation; not every "
-                                    "passage is cited in Core findings."
+                                    "passage is cited in the Answer or key supporting findings."
                                 )
                                 for item in result.evidence:
                                     page = (

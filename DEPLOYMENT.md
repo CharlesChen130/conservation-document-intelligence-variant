@@ -174,9 +174,10 @@ After the first deployment and every material update, confirm:
 - [ ] Keyword search returns page-aware evidence for `wetland restoration` and `invasive carp`.
 - [ ] Semantic search works with the configured key and current 982-vector index.
 - [ ] All wiki pages use the two-level **Entity type** then **Entity** selectors.
+- [ ] Wiki summaries contain cited entity information, while mention/document counts appear separately under **Corpus coverage**.
 - [ ] Wiki content does not expose `generated_at`, `generation_method`, or other YAML front matter.
 - [ ] A DOC036 question such as “How does MDC use overlay analysis and a conservation heat map to quality-assure Conservation Opportunity Areas?” returns inspectable DOC036 evidence.
-- [ ] Chatbot answers show **Core findings**, a cited supporting-document list, and matching **Retrieved evidence**.
+- [ ] Chatbot responses show **Answer** first, followed by matching **Key supporting findings**, **Supporting documents**, and **All retrieved evidence**.
 - [ ] A clearly unsupported question, such as an exact guaranteed 2035 wolf population, produces an abstention rather than an invented value.
 - [ ] The public Evaluation tab exposes only the 10 official questions, not engineering or holdout cases.
 - [ ] App visibility matches the owner's intended setting and the earlier CDIP app remains unchanged.

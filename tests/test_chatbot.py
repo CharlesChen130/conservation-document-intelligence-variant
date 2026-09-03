@@ -2829,7 +2829,7 @@ def test_page_number_gap_question_uses_stored_page_metadata(tmp_path):
     assert provider.calls == 0
 
 
-def test_chatbot_presentation_adds_core_findings_and_supporting_documents():
+def test_chatbot_presentation_leads_with_answer_and_retains_supporting_details():
     source = _result()
     formatted = format_chatbot_response(
         "The retrieved evidence supports:\n\n"
@@ -2837,8 +2837,12 @@ def test_chatbot_presentation_adds_core_findings_and_supporting_documents():
         [source],
     )
 
-    assert formatted.startswith("### Core findings")
+    assert formatted.startswith(
+        "### Answer\n\nWetlands provide habitat. [DOC999, p. 4]"
+    )
     assert "The retrieved evidence supports:" not in formatted
+    assert "### Key supporting findings" in formatted
+    assert "### Core findings" not in formatted
     assert "### Supporting documents" in formatted
     assert "**Wetland Plan** - [DOC999, p. 4]" in formatted
     assert validate_grounded_answer(formatted, [source]) == []

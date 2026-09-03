@@ -154,6 +154,16 @@ def test_generate_evidence_backed_wiki_page(tmp_path):
     wetland_page = pages_by_title["Wetland"]
     assert validate_wiki_page(wetland_page.content) == []
     assert "[DOC999, p. 4]" in wetland_page.content
+    summary = wetland_page.content.split("## Summary", 1)[1].split(
+        "## Corpus coverage", 1
+    )[0]
+    assert "Wetlands provide habitat and improve water quality." in summary
+    assert "The corpus contains" not in summary
+    assert "## Corpus coverage" in wetland_page.content
+    assert (
+        "Corpus extraction recorded 3 mentions of **Wetland** across 1 public document."
+        in wetland_page.content
+    )
     assert "TABLE OF CONTENTS" not in wetland_page.content
     assert "explicit `species_uses_habitat` relation" in wetland_page.content
     assert "../species/mallard.md" in wetland_page.content
@@ -168,6 +178,9 @@ def test_validator_rejects_uncited_and_noisy_facts():
 
 ## Summary
 Wetland summary without evidence.
+
+## Corpus coverage
+One extracted mention in one public document.
 
 ## Key facts
 - TABLE OF CONTENTS Wetland ........ 4
